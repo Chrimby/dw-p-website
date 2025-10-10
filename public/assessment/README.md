@@ -118,68 +118,26 @@ Zum Testen können Sie eine dieser kostenlosen Services nutzen:
 
 ## Branding Anpassungen
 
-### ⚠️ WICHTIG: area-normal und area-extended Fonts konfigurieren
+### Schriftarten anpassen (optional)
 
-**Das Assessment ist vorkonfiguriert für Ihre area Fonts, aber Sie müssen die Font-Dateien selbst einbinden!**
+Die App verwendet standardmäßig **Work Sans** - eine moderne, professionelle Schriftart die sofort funktioniert.
 
-Die App nutzt aktuell `Work Sans` als **Fallback**. Folgen Sie diesen Schritten um Ihre Branding-Fonts zu aktivieren:
+Falls Sie andere Fonts verwenden möchten:
 
-#### Schritt 1: Font-Dateien vorbereiten
-
-Stellen Sie sicher, dass Sie haben:
-- `area-normal.woff2` (Body-Text)
-- `area-extended.woff2` (Headlines)
-
-Optional auch `.woff` Format für ältere Browser.
-
-#### Schritt 2: Fonts hochladen
-
-Laden Sie die Font-Dateien in WordPress hoch:
-```
-WordPress → Medien → Dateien hochladen
-Notieren Sie die URLs z.B.:
-- https://ihre-domain.de/wp-content/uploads/fonts/area-normal.woff2
-- https://ihre-domain.de/wp-content/uploads/fonts/area-extended.woff2
-```
-
-#### Schritt 3: Font-URLs in index.html aktualisieren
-
-Die @font-face Regeln sind **bereits in index.html** (Zeilen 23-39). Sie müssen nur die URLs anpassen:
-
-**Standard-Pfad (falls Fonts unter /wp-content/uploads/fonts/ liegen):**
-- Die URLs sind bereits korrekt: `/wp-content/uploads/fonts/area-normal.woff2`
-- Einfach die Fonts dort hochladen und fertig!
-
-**Falls Fonts woanders liegen:**
-Öffnen Sie `index.html` und passen Sie **Zeile 25 und 26** sowie **34 und 35** an:
-
+1. **Eigene Fonts hochladen:**
 ```css
-/* Beispiel: Fonts in einem anderen Verzeichnis */
-src: url('/ihr/anderer/pfad/area-normal.woff2') format('woff2'),
-     url('/ihr/anderer/pfad/area-normal.woff') format('woff');
+/* In index.html nach Zeile 17 einfügen */
+@font-face {
+    font-family: 'IhreFont';
+    src: url('/pfad/zu/font.woff2') format('woff2');
+}
 ```
 
-**Falls Fonts von externer URL kommen:**
+2. **CSS-Variablen anpassen (Zeile 30-31):**
 ```css
-src: url('https://cdn.ihre-domain.de/fonts/area-normal.woff2') format('woff2');
+--font-normal: 'IhreFont', 'Work Sans', sans-serif;
+--font-extended: 'IhreFont', 'Work Sans', sans-serif;
 ```
-
-**Fertig!** Die CSS-Variablen sind bereits konfiguriert:
-```css
---font-normal: 'area-normal', 'Work Sans', ...    /* Bereits drin! */
---font-extended: 'area-extended', 'Work Sans', ... /* Bereits drin! */
-```
-
-#### Alternative: Adobe Fonts / Typekit
-
-Falls Ihre Fonts bei Adobe Fonts gehostet sind:
-
-```html
-<!-- Im <head> vor den Styles einfügen -->
-<link rel="stylesheet" href="https://use.typekit.net/IHRE_ID.css">
-```
-
-Dann Schritt 3 überspringen - die Fonts werden automatisch geladen.
 
 ### Farben anpassen
 

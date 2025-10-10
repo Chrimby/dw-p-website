@@ -12,29 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
-        /* 
-         * WICHTIG: Ersetzen Sie die Platzhalter-URLs unten mit Ihren tatsächlichen Font-URLs!
-         * Die Fonts sind bereits konfiguriert, Sie müssen nur die URLs anpassen.
-         */
-        
-        @font-face {
-            font-family: 'area-normal';
-            src: url('/wp-content/uploads/fonts/area-normal.woff2') format('woff2'),
-                 url('/wp-content/uploads/fonts/area-normal.woff') format('woff');
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        
-        @font-face {
-            font-family: 'area-extended';
-            src: url('/wp-content/uploads/fonts/area-extended.woff2') format('woff2'),
-                 url('/wp-content/uploads/fonts/area-extended.woff') format('woff');
-            font-weight: 800;
-            font-style: normal;
-            font-display: swap;
-        }
-        
         /* CSS Custom Properties */
         :root {
             --color-black: #000000;
@@ -47,8 +24,8 @@
             --color-gray-800: #262626;
             --color-gray-900: #171717;
             
-            --font-normal: 'area-normal', 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-extended: 'area-extended', 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-normal: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-extended: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             
             --radius-sm: 12px;
             --radius-md: 20px;
@@ -1734,49 +1711,43 @@
                 } : null
             };
             
+            // Save to localStorage
             try {
-                // Check if webhook URL is configured
-                if (CONFIG.webhookUrl === 'YOUR_WEBHOOK_URL_HERE') {
-                    throw new Error('Webhook URL not configured');
-                }
-                
-                const response = await fetch(CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(submitData)
-                });
-                
-                if (response.ok) {
-                    showSuccessMessage();
-                } else {
-                    throw new Error(`HTTP Error: ${response.status}`);
-                }
-            } catch (error) {
-                console.error('Error submitting results:', error);
-                
-                // Show error message
-                if (error.message === 'Webhook URL not configured') {
-                    alert('⚠️ Webhook URL ist nicht konfiguriert.\n\nBitte konfigurieren Sie die Webhook-URL in der index.html Datei.\n\nIhre Ergebnisse:\nGesamtscore: ' + state.scores.total + ' / 121 Punkte');
-                } else {
-                    alert('⚠️ Es gab ein Problem beim Senden der Daten.\n\nFehler: ' + error.message + '\n\nIhre Ergebnisse wurden lokal gespeichert.\nGesamtscore: ' + state.scores.total + ' / 121 Punkte');
-                }
-                
-                // Log to console for debugging
-                console.log('Assessment Data:', submitData);
-                
-                // Save to localStorage as backup
-                try {
-                    localStorage.setItem('assessment_backup_' + Date.now(), JSON.stringify(submitData));
-                } catch (e) {
-                    console.error('Could not save to localStorage:', e);
-                }
-            } finally {
-                // Restore button
-                submitButton.disabled = false;
-                submitButton.innerHTML = originalText;
+                localStorage.setItem('assessment_backup_' + Date.now(), JSON.stringify(submitData));
+                console.log('✅ Assessment Data gespeichert:', submitData);
+            } catch (e) {
+                console.error('Could not save to localStorage:', e);
             }
+            
+            // Send to webhook if configured
+            if (CONFIG.webhookUrl && CONFIG.webhookUrl !== 'YOUR_WEBHOOK_URL_HERE') {
+                try {
+                    const response = await fetch(CONFIG.webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(submitData)
+                    });
+                    
+                    if (response.ok) {
+                        console.log('✅ Daten erfolgreich an Webhook gesendet');
+                    } else {
+                        console.warn('⚠️ Webhook Error:', response.status);
+                    }
+                } catch (error) {
+                    console.warn('⚠️ Webhook nicht erreichbar:', error.message);
+                }
+            } else {
+                console.log('ℹ️ Kein Webhook konfiguriert - Daten in localStorage und Console verfügbar');
+            }
+            
+            // Always show success
+            showSuccessMessage();
+            
+            // Restore button
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalText;
         }
         
         function showSuccessMessage() {

@@ -78,27 +78,9 @@ Text: "🎯 Neues Assessment: {totalScore}/121 Punkte"
 
 ---
 
-## 🎨 Branding anpassen
+## 🎨 Branding anpassen (optional)
 
-### ⚠️ area Fonts einbinden (WICHTIG!)
-
-Das Assessment nutzt `Work Sans` als Fallback. Für Ihr Branding:
-
-1. **Fonts in WordPress hochladen** (area-normal.woff2, area-extended.woff2)
-2. **@font-face in index.html einfügen** (nach Zeile 16):
-```css
-@font-face {
-    font-family: 'area-normal';
-    src: url('IHRE_FONT_URL/area-normal.woff2') format('woff2');
-}
-@font-face {
-    font-family: 'area-extended';
-    src: url('IHRE_FONT_URL/area-extended.woff2') format('woff2');
-}
-```
-3. **Fertig!** Die Font-Variablen sind bereits konfiguriert.
-
-Siehe `README.md` für Details.
+Die App funktioniert sofort mit **Work Sans** - keine Konfiguration nötig!
 
 ### Farben ändern (in index.html):
 ```css
