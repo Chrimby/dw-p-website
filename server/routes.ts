@@ -14,6 +14,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Serve standalone assessment from public directory
   const publicPath = path.resolve(import.meta.dirname, "..", "public");
   app.use(express.static(publicPath));
+  
+  // Redirect /assessment/ to /assessment/index.html
+  app.get('/assessment', (req, res) => {
+    res.redirect('/assessment/index.html');
+  });
+  
+  app.get('/assessment/', (req, res) => {
+    res.redirect('/assessment/index.html');
+  });
 
   const httpServer = createServer(app);
 
