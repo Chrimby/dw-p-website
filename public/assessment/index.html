@@ -3533,9 +3533,6 @@
                     <div class="progress-overall-track" role="progressbar" aria-label="Gesamtfortschritt" aria-valuenow="${overallProgress}" aria-valuemin="0" aria-valuemax="100">
                         <div class="progress-overall-fill" style="width: ${overallProgress}%"></div>
                     </div>
-                    <div class="progress-labels secondary">
-                        <span aria-live="polite">${answeredText}</span>
-                    </div>
                 </div>
             `;
         }
@@ -4306,12 +4303,15 @@
                 });
                 state.resultsTracked = true;
             }
-            
+
+            // Send results to webhook
+            sendResultsToWebhook();
+
             state.showResults = true;
             render();
             setTimeout(() => {
                 drawRadarChart();
-                
+
                 // Add resize handler for responsive chart
                 let resizeTimeout;
                 window.addEventListener('resize', () => {
@@ -4322,46 +4322,38 @@
                 });
             }, 100);
         }
-        
-        async function submitResults() {
+
+        async function sendResultsToWebhook() {
+            if (!CONFIG.webhookUrl || CONFIG.webhookUrl === 'YOUR_WEBHOOK_URL_HERE') {
+                console.warn('⚠️ Webhook URL not configured.');
+                return;
+            }
+
             const payload = {
+                event: 'assessment_completed',
                 answers: state.answers,
                 scores: state.scores,
                 assessmentId: state.assessmentId,
                 timestamp: new Date().toISOString()
             };
 
-            // Validate webhook configuration
-            if (!CONFIG.webhookUrl || CONFIG.webhookUrl === 'YOUR_WEBHOOK_URL_HERE') {
-                console.warn('⚠️ Webhook URL not configured. Results will not be saved remotely. Please configure CONFIG.webhookUrl in production.');
-            }
+            try {
+                const response = await fetch(CONFIG.webhookUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
 
-            // Try to send to webhook
-            if (CONFIG.webhookUrl && CONFIG.webhookUrl !== 'YOUR_WEBHOOK_URL_HERE') {
-                try {
-                    const response = await fetch(CONFIG.webhookUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                } catch (error) {
-                    console.error('Error sending to webhook:', error);
-                    // Still show success to user, but log the error
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            }
 
-            // Show success message
-            document.getElementById('app').innerHTML = `
-                <div class="container">
-                    ${renderSuccess()}
-                </div>
-            `;
+                console.log('✅ Results sent to webhook successfully');
+            } catch (error) {
+                console.error('❌ Error sending results to webhook:', error);
+            }
         }
-        
+
         // Main Render Function
         function render() {
             const app = document.getElementById('app');
