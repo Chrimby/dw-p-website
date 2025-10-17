@@ -4338,6 +4338,42 @@
                 return;
             }
 
+            // Build detailed answers array with readable question/answer text
+            const answersDetailed = [];
+            const questions = CONFIG.questions || [];
+
+            Object.entries(state.answers).forEach(([questionId, answerValue]) => {
+                const question = questions.find(q => q.id === questionId);
+                if (!question) return;
+
+                let answerText = '';
+                let score = null;
+
+                // Find the matching option to get the label text
+                if (question.options && question.type !== 'text' && question.type !== 'textarea' && question.type !== 'email') {
+                    const option = question.options.find(opt => opt.value === answerValue);
+                    if (option) {
+                        answerText = option.label;
+                        score = option.score !== undefined ? option.score : null;
+                    }
+                } else {
+                    // For free text questions, the answer value IS the text
+                    answerText = answerValue;
+                }
+
+                answersDetailed.push({
+                    questionId: question.id,
+                    section: question.section,
+                    sectionTitle: question.sectionTitle || '',
+                    questionText: question.text,
+                    questionHint: question.hint || '',
+                    questionType: question.type,
+                    answerValue: answerValue,
+                    answerText: answerText,
+                    score: score
+                });
+            });
+
             // Calculate interpretations for each phase
             const interpretations = {};
             SCORING_SECTIONS.forEach(section => {
@@ -4433,12 +4469,13 @@
 
             const payload = {
                 event: 'assessment_completed',
-                answers: state.answers,
+                assessmentId: state.assessmentId,
+                timestamp: new Date().toISOString(),
+                language: CURRENT_LANG,
+                answersDetailed,
                 scores: state.scores,
                 interpretations,
-                recommendations,
-                assessmentId: state.assessmentId,
-                timestamp: new Date().toISOString()
+                recommendations
             };
 
             try {
