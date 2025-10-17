@@ -1599,6 +1599,132 @@
             }
         }
 
+        /* ========================================
+           MOBILE UX FIXES - 2025-10-17
+           Critical fixes for touch targets, layout shifts, and mobile optimization
+           Based on comprehensive design review findings
+           ======================================== */
+
+        /* Fix #1 & #2: Touch Targets - WCAG 2.1 Compliance */
+        .btn {
+            min-height: 44px !important;
+        }
+
+        .option-radio,
+        .option-checkbox {
+            width: 24px !important;
+            height: 24px !important;
+        }
+
+        /* Fix #3: Option Spacing - Prevent Accidental Taps */
+        .options {
+            gap: 0.75rem;
+        }
+
+        /* Fix #5: Progress Bar Performance - Prevent Reflow */
+        .progress-wrapper {
+            contain: layout;
+        }
+
+        /* Mobile Breakpoint: 640px (Tablets & Small Laptops) */
+        @media (max-width: 640px) {
+            /* Fix #1: Larger touch targets */
+            .btn {
+                padding: 1.125rem 1.75rem !important;
+                min-height: 48px !important;
+            }
+
+            /* Fix #2: Larger radio/checkbox */
+            .option-radio,
+            .option-checkbox {
+                width: 26px !important;
+                height: 26px !important;
+            }
+
+            /* Fix #3: Better option spacing */
+            .options {
+                gap: 1rem;
+            }
+
+            .option {
+                padding: 1rem 0.875rem;
+                min-height: 54px;
+            }
+
+            /* Fix #4: Disable animations to prevent layout shift */
+            .question-card {
+                opacity: 1 !important;
+                animation: none !important;
+                transform: none !important;
+            }
+
+            .question-card.fade-out {
+                animation: none !important;
+                opacity: 1 !important;
+            }
+
+            /* Fix #7: Improved readability */
+            .progress-labels {
+                font-size: 0.875rem !important;
+            }
+
+            .progress-labels.secondary {
+                font-size: 0.8125rem !important;
+            }
+
+            .question-helper-text {
+                font-size: 0.9375rem;
+                line-height: 1.6;
+            }
+
+            /* Fix #8: Button group spacing */
+            .btn-group {
+                gap: 1rem;
+            }
+        }
+
+        /* Mobile Breakpoint: 430px (iPhone 12/13/14 Pro Max) */
+        @media (max-width: 430px) {
+            .question-card {
+                padding: 1.75rem 1.5rem;
+            }
+
+            .welcome-screen,
+            .phase-overview {
+                padding: 2.5rem 1.25rem;
+            }
+
+            .question-text {
+                font-size: 1.0625rem;
+                line-height: 1.5;
+            }
+
+            .option {
+                padding: 1.125rem 1rem;
+                min-height: 56px;
+            }
+
+            .btn {
+                min-height: 52px !important;
+            }
+        }
+
+        /* Mobile Breakpoint: 375px (iPhone SE, older Android) */
+        @media (max-width: 375px) {
+            .question-card {
+                padding: 1.5rem 1.25rem;
+            }
+
+            .question-text {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .option {
+                padding: 1rem 0.75rem;
+            }
+        }
+
     </style>
     
     <script>
