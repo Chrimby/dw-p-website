@@ -412,6 +412,15 @@
             .welcome-media-photo {
                 aspect-ratio: 16 / 12;
             }
+
+            /* Fix #13: Swap content/media order on mobile - Content first, Media second */
+            .welcome-content {
+                order: -1;
+            }
+
+            .welcome-media {
+                order: 1;
+            }
         }
         
         /* Question Card */
