@@ -1781,9 +1781,10 @@
         };
 
         const CURRENT_LANG = detectLanguage();
+        console.log('🌍 Detected language:', CURRENT_LANG, '| Path:', window.location.pathname);
 
         const CONFIG = {
-            webhookUrl: 'https://brixon.app.n8n.cloud/webhook-test/brixon-b2b-marketing-assessment',
+            webhookUrl: 'https://brixon.app.n8n.cloud/webhook/brixon-b2b-marketing-assessment',
             calendlyUrl: 'https://calendly.com/sauerborn-brixongroup/10-to-100-leads-system-call',
             tracking: {
                 googleTagManagerId: '',
