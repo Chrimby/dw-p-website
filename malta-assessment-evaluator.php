@@ -39,6 +39,13 @@ const ALLOWED_ORIGINS = [
     'http://localhost:3000', // Vite dev server
 ];
 
+// Webhook URL for sending results (hidden from client)
+// This keeps your webhook URL secure and not visible in JavaScript
+const WEBHOOK_URL = 'https://brixon.app.n8n.cloud/webhook/malta-eignungscheck';
+
+// Enable webhook sending (set to false to disable)
+const WEBHOOK_ENABLED = true;
+
 // Rate limiting configuration
 const RATE_LIMIT_MAX_REQUESTS = 10; // Max requests per time window
 const RATE_LIMIT_TIME_WINDOW = 3600; // Time window in seconds (3600 = 1 hour)
@@ -115,6 +122,12 @@ try {
         ],
         'timestamp' => date('c'),
     ];
+
+    // Send to webhook (if enabled)
+    if (WEBHOOK_ENABLED) {
+        $userContact = isset($input['userContact']) ? $input['userContact'] : [];
+        sendWebhook($answers, $userContact, $scoreData, $interpretation);
+    }
 
     // Log for debugging (only in debug mode)
     if (DEBUG_MODE) {
@@ -561,4 +574,81 @@ function sendError(string $message, int $statusCode = 400): void
         'error' => $message,
     ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
     exit;
+}
+
+/**
+ * Send data to webhook
+ * This keeps the webhook URL hidden from the client
+ *
+ * @param array $answers User's answers
+ * @param array $userContact User contact information
+ * @param array $scoreData Score calculation results
+ * @param array $interpretation Interpretation data
+ * @return bool True if successful, false otherwise
+ */
+function sendWebhook(array $answers, array $userContact, array $scoreData, array $interpretation): bool
+{
+    if (!WEBHOOK_ENABLED || empty(WEBHOOK_URL)) {
+        return false;
+    }
+
+    try {
+        // Build webhook payload
+        $payload = [
+            'timestamp' => date('c'),
+            'contact' => $userContact,
+            'answers' => $answers,
+            'score' => [
+                'percentage' => $scoreData['percentage'],
+                'weightedScore' => $scoreData['weightedScore'],
+                'totalPossibleWeightedScore' => $scoreData['totalPossibleWeightedScore'],
+                'category' => $interpretation['category'],
+            ],
+            'interpretation' => $interpretation['interpretation'],
+            'detailedResults' => $scoreData['detailedResults'],
+            'metadata' => [
+                'ip' => getClientIP(),
+                'userAgent' => $_SERVER['HTTP_USER_AGENT'] ?? 'Unknown',
+                'serverTime' => date('Y-m-d H:i:s'),
+            ],
+        ];
+
+        // Send to webhook using cURL
+        $ch = curl_init(WEBHOOK_URL);
+        curl_setopt_array($ch, [
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($payload),
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Accept: application/json',
+            ],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 10, // 10 second timeout
+            CURLOPT_FOLLOWLOCATION => true,
+        ]);
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        // Check if webhook was successful
+        if ($httpCode >= 200 && $httpCode < 300) {
+            if (DEBUG_MODE) {
+                error_log('[Malta Assessment] Webhook sent successfully: ' . WEBHOOK_URL);
+            }
+            return true;
+        } else {
+            if (DEBUG_MODE) {
+                error_log('[Malta Assessment] Webhook failed: HTTP ' . $httpCode . ' - ' . $error);
+            }
+            return false;
+        }
+
+    } catch (Exception $e) {
+        if (DEBUG_MODE) {
+            error_log('[Malta Assessment] Webhook exception: ' . $e->getMessage());
+        }
+        return false;
+    }
 }

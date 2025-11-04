@@ -808,14 +808,16 @@
     </div>
 
     <script>
-        // Configuration - v2.2 (Server-Side Evaluation)
+        // Configuration - v2.3 (Server-Side Evaluation + Webhook)
         const CONFIG = {
-            webhookUrl: 'https://brixon.app.n8n.cloud/webhook/malta-eignungscheck',
             // Server-side evaluation endpoint
             // TODO: Update this URL with your actual deployment endpoint
             apiEndpoint: 'https://www.drwerner.com/wp-json/drwerner/v1/malta-evaluator',
             // For standalone deployment, use:
             // apiEndpoint: 'https://www.drwerner.com/api/malta-evaluator.php',
+            //
+            // NOTE: Webhook URL is now server-side (in PHP) for security
+            // This prevents the webhook URL from being visible in JavaScript
         };
 
                 // Questions Data
@@ -1209,6 +1211,7 @@
                 console.log('🔒 Sending answers to server for secure evaluation...');
 
                 // Send answers to server for evaluation
+                // Include userContact so server can send to webhook
                 const response = await fetch(CONFIG.apiEndpoint, {
                     method: 'POST',
                     headers: {
@@ -1216,7 +1219,8 @@
                         'Accept': 'application/json',
                     },
                     body: JSON.stringify({
-                        answers: answers
+                        answers: answers,
+                        userContact: userContact // Server will send this to webhook
                     })
                 });
 
@@ -1326,20 +1330,10 @@
                 const neutralDetails = scoreData.detailedResults.filter(r => r.category === 'neutral');
                 const criticalDetails = scoreData.detailedResults.filter(r => r.category === 'critical');
 
-                // Send webhook
-                await sendWebhook({
-                    timestamp: new Date().toISOString(),
-                    contact: userContact,
-                    answers: answers,
-                    score: {
-                        percentage: percentage,
-                        category: category
-                    },
-                    interpretation: interpretation,
-                    detailedResults: scoreData.detailedResults
-                });
+                // NOTE: Webhook is now sent server-side (in PHP) for security
+                // No need to send from client anymore
 
-                // Render results (this function stays the same)
+                // Render results
                 renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
 
             } catch (error) {
@@ -1506,20 +1500,9 @@
             resultsContainer.innerHTML = html;
         }
 
-        // Send Webhook
-        async function sendWebhook(data) {
-            try {
-                await fetch(CONFIG.webhookUrl, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(data)
-                });
-            } catch (error) {
-                console.error('Webhook error:', error);
-            }
-        }
+        // NOTE: sendWebhook() function removed
+        // Webhook is now sent server-side (in PHP) for security
+        // See malta-assessment-evaluator.php for webhook implementation
 
         // Add event listeners for contact form inputs
         document.addEventListener('input', (e) => {
