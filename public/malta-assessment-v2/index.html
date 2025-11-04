@@ -808,9 +808,14 @@
     </div>
 
     <script>
-        // Configuration - v2.1
+        // Configuration - v2.2 (Server-Side Evaluation)
         const CONFIG = {
             webhookUrl: 'https://brixon.app.n8n.cloud/webhook/malta-eignungscheck',
+            // Server-side evaluation endpoint
+            // TODO: Update this URL with your actual deployment endpoint
+            apiEndpoint: 'https://www.drwerner.com/wp-json/drwerner/v1/malta-evaluator',
+            // For standalone deployment, use:
+            // apiEndpoint: 'https://www.drwerner.com/api/malta-evaluator.php',
         };
 
                 // Questions Data
@@ -1197,114 +1202,166 @@
             }
         }
 
-        // Calculate Score
-        function calculateScore() {
-            let weightedScore = 0;
-            let totalPossibleWeightedScore = 0;
-            let detailedResults = [];
+        // Calculate Score - Server-Side Version
+        // Scoring logic is now completely hidden on the server
+        async function calculateScore() {
+            try {
+                console.log('🔒 Sending answers to server for secure evaluation...');
 
-            questions.forEach(q => {
-                if (q.type === 'single_choice' && q.options) {
-                    const selectedValue = answers[q.id];
-                    const selectedOption = q.options.find(opt => opt.value === selectedValue);
+                // Send answers to server for evaluation
+                const response = await fetch(CONFIG.apiEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        answers: answers
+                    })
+                });
 
-                    if (selectedOption) {
-                        const score = selectedOption.score;
-                        const weight = q.weight || 1.0;
-                        const maxOptionScore = Math.max(...q.options.map(opt => opt.score));
-
-                        // Weighted scoring
-                        const questionWeightedScore = score * weight;
-                        weightedScore += questionWeightedScore;
-                        totalPossibleWeightedScore += maxOptionScore * weight;
-
-                        // Categorize based on score
-                        let category = 'neutral';
-                        if (score >= 8) category = 'positive';
-                        else if (score <= 4) category = 'critical';
-
-                        detailedResults.push({
-                            questionId: q.id,
-                            questionText: q.text,
-                            answer: selectedOption.label,
-                            answerDescription: selectedOption.description || '',
-                            score: score,
-                            category: category
-                        });
-                    } else {
-                        // Add max possible to total even if not answered
-                        const weight = q.weight || 1.0;
-                        const maxOptionScore = Math.max(...q.options.map(opt => opt.score));
-                        totalPossibleWeightedScore += maxOptionScore * weight;
-                    }
+                // Check response status
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Server responded with ${response.status}: ${errorText}`);
                 }
-            });
 
-            // Convert to percentage (0-100)
-            const percentage = totalPossibleWeightedScore > 0
-                ? Math.round((weightedScore / totalPossibleWeightedScore) * 100)
-                : 0;
+                // Parse JSON response
+                const result = await response.json();
 
-            return {
-                percentage,
-                weightedScore,
-                totalPossibleWeightedScore,
-                detailedResults
-            };
+                // Check if evaluation was successful
+                if (!result.success) {
+                    throw new Error(result.error || 'Evaluation failed');
+                }
+
+                console.log('✅ Score calculated successfully on server');
+
+                // Return the score data from server
+                return {
+                    percentage: result.data.percentage,
+                    weightedScore: result.data.weightedScore,
+                    totalPossibleWeightedScore: result.data.totalPossibleWeightedScore,
+                    detailedResults: result.data.detailedResults,
+                    // Additional server-provided fields
+                    category: result.data.category,
+                    categoryLabel: result.data.categoryLabel,
+                    interpretation: result.data.interpretation
+                };
+
+            } catch (error) {
+                console.error('❌ Score calculation failed:', error);
+
+                // Show user-friendly error message
+                const errorMessage = getErrorMessage(error);
+                alert(errorMessage);
+
+                // Fallback: Return neutral result so the user isn't completely stuck
+                return {
+                    percentage: 50,
+                    weightedScore: 0,
+                    totalPossibleWeightedScore: 0,
+                    category: 'moderate',
+                    categoryLabel: 'Beratung empfohlen',
+                    interpretation: 'Aufgrund eines technischen Problems können wir Ihre Antworten momentan nicht auswerten. Bitte kontaktieren Sie uns direkt für eine persönliche Beratung.',
+                    detailedResults: []
+                };
+            }
         }
 
-        // Calculate and Show Results
-        async function calculateAndShowResults() {
-            const scoreData = calculateScore();
-            const percentage = scoreData.percentage;
+        // Get user-friendly error message
+        function getErrorMessage(error) {
+            const message = error.message || '';
 
-            // Determine category and interpretation
-            let category, categoryLabel, interpretation;
-
-            if (percentage < 20) {
-                category = 'explore';
-                categoryLabel = 'Lassen Sie uns sprechen';
-                interpretation = 'Ihre Situation erfordert eine individuelle Beratung. Kontaktieren Sie uns für ein persönliches Gespräch über Ihre Möglichkeiten. Malta bietet flexible Lösungen für verschiedenste Situationen.';
-            } else if (percentage < 35) {
-                category = 'fair';
-                categoryLabel = 'Malta ist möglich';
-                interpretation = 'Malta könnte für Sie funktionieren. Lassen Sie uns gemeinsam herausfinden, wie wir dies optimal gestalten. Mit einigen Anpassungen können Sie von Maltas Vorteilen profitieren.';
-            } else if (percentage < 55) {
-                category = 'moderate';
-                categoryLabel = 'Malta ist gut geeignet';
-                interpretation = 'Malta bietet gute Möglichkeiten für Sie. Mit einigen Anpassungen können Sie optimal profitieren. Die Kombination aus niedrigen Steuern, EU-Mitgliedschaft und hoher Lebensqualität macht Malta einzigartig.';
-            } else if (percentage < 75) {
-                category = 'good';
-                categoryLabel = 'Malta ist sehr gut geeignet';
-                interpretation = 'Großartig! Malta bietet signifikante Vorteile für Ihre Situation. Mit der richtigen Planung wird dies ein Erfolg. Wir helfen Ihnen, die optimale Struktur für Ihre spezifische Situation zu finden.';
-            } else {
-                category = 'excellent';
-                categoryLabel = 'Malta ist hervorragend geeignet';
-                interpretation = 'Perfekt! Ihre Situation ist ideal für Malta. Sie können von allen Vorteilen profitieren - lassen Sie uns die Details besprechen! Hohe Erfolgswahrscheinlichkeit bei korrekter Umsetzung.';
+            if (message.includes('429')) {
+                return 'Sie haben zu viele Anfragen gesendet. Bitte warten Sie einen Moment und versuchen Sie es erneut.';
             }
+            if (message.includes('Failed to fetch') || message.includes('NetworkError')) {
+                return 'Keine Verbindung zum Server möglich. Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
+            }
+            if (message.includes('500')) {
+                return 'Ein Serverfehler ist aufgetreten. Bitte versuchen Sie es in wenigen Minuten erneut oder kontaktieren Sie uns direkt.';
+            }
+            return 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt für eine persönliche Beratung.';
+        }
 
-            // Categorize detailed results
-            const positiveDetails = scoreData.detailedResults.filter(r => r.category === 'positive');
-            const neutralDetails = scoreData.detailedResults.filter(r => r.category === 'neutral');
-            const criticalDetails = scoreData.detailedResults.filter(r => r.category === 'critical');
+        // Calculate and Show Results - Server-Side Version
+        async function calculateAndShowResults() {
+            // Hide question screen
+            document.getElementById('questionScreen').classList.add('hidden');
 
-            // Send webhook
-            await sendWebhook({
-                timestamp: new Date().toISOString(),
-                contact: userContact,
-                answers: answers,
-                score: {
-                    percentage: percentage,
-                    totalScore: scoreData.totalScore,
-                    maxScore: scoreData.maxScore,
-                    category: category
-                },
-                interpretation: interpretation,
-                detailedResults: scoreData.detailedResults
-            });
+            // Show loading state in results screen
+            const resultsScreen = document.getElementById('resultsScreen');
+            resultsScreen.classList.remove('hidden');
+            resultsScreen.innerHTML = `
+                <div style="text-align: center; padding: 4rem 2rem;">
+                    <div style="font-size: 3rem; margin-bottom: 1rem; animation: pulse 1.5s ease-in-out infinite;">⏳</div>
+                    <h2 style="font-family: var(--font-heading); color: var(--color-primary); margin-bottom: 0.5rem;">
+                        Ihre Antworten werden ausgewertet...
+                    </h2>
+                    <p style="color: var(--color-gray-500); margin-top: 0.5rem;">
+                        Einen Moment bitte
+                    </p>
+                </div>
+                <style>
+                    @keyframes pulse {
+                        0%, 100% { opacity: 1; }
+                        50% { opacity: 0.5; }
+                    }
+                </style>
+            `;
 
-            // Render results
-            renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
+            try {
+                // Get score from server (this is now async)
+                const scoreData = await calculateScore();
+
+                // Extract data from server response
+                // Server now provides category, categoryLabel, and interpretation
+                const percentage = scoreData.percentage;
+                const category = scoreData.category;
+                const categoryLabel = scoreData.categoryLabel;
+                const interpretation = scoreData.interpretation;
+
+                // Categorize detailed results
+                const positiveDetails = scoreData.detailedResults.filter(r => r.category === 'positive');
+                const neutralDetails = scoreData.detailedResults.filter(r => r.category === 'neutral');
+                const criticalDetails = scoreData.detailedResults.filter(r => r.category === 'critical');
+
+                // Send webhook
+                await sendWebhook({
+                    timestamp: new Date().toISOString(),
+                    contact: userContact,
+                    answers: answers,
+                    score: {
+                        percentage: percentage,
+                        category: category
+                    },
+                    interpretation: interpretation,
+                    detailedResults: scoreData.detailedResults
+                });
+
+                // Render results (this function stays the same)
+                renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
+
+            } catch (error) {
+                console.error('Failed to show results:', error);
+
+                // Show error state
+                resultsScreen.innerHTML = `
+                    <div style="text-align: center; padding: 4rem 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
+                        <h2 style="font-family: var(--font-heading); color: var(--color-danger); margin-bottom: 1rem;">
+                            Fehler bei der Auswertung
+                        </h2>
+                        <p style="color: var(--color-gray-600); margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto;">
+                            Es gab einen technischen Fehler bei der Auswertung Ihrer Antworten.
+                            Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.
+                        </p>
+                        <button class="btn-submit-dwp" onclick="location.reload()">
+                            Seite neu laden
+                        </button>
+                    </div>
+                `;
+            }
         }
 
         // Render Results
