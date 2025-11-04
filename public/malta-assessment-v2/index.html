@@ -808,16 +808,8 @@
     </div>
 
     <script>
-        // Configuration - v2.3 (Server-Side Evaluation + Webhook)
         const CONFIG = {
-            // Server-side evaluation endpoint
-            // TODO: Update this URL with your actual deployment endpoint
             apiEndpoint: 'https://www.drwerner.com/wp-json/drwerner/v1/malta-evaluator',
-            // For standalone deployment, use:
-            // apiEndpoint: 'https://www.drwerner.com/api/malta-evaluator.php',
-            //
-            // NOTE: Webhook URL is now server-side (in PHP) for security
-            // This prevents the webhook URL from being visible in JavaScript
         };
 
                 // Questions Data
@@ -1204,14 +1196,8 @@
             }
         }
 
-        // Calculate Score - Server-Side Version
-        // Scoring logic is now completely hidden on the server
         async function calculateScore() {
             try {
-                console.log('🔒 Sending answers to server for secure evaluation...');
-
-                // Send answers to server for evaluation
-                // Include userContact so server can send to webhook
                 const response = await fetch(CONFIG.apiEndpoint, {
                     method: 'POST',
                     headers: {
@@ -1220,46 +1206,37 @@
                     },
                     body: JSON.stringify({
                         answers: answers,
-                        userContact: userContact // Server will send this to webhook
+                        userContact: userContact
                     })
                 });
 
-                // Check response status
                 if (!response.ok) {
                     const errorText = await response.text();
                     throw new Error(`Server responded with ${response.status}: ${errorText}`);
                 }
 
-                // Parse JSON response
                 const result = await response.json();
 
-                // Check if evaluation was successful
                 if (!result.success) {
                     throw new Error(result.error || 'Evaluation failed');
                 }
 
-                console.log('✅ Score calculated successfully on server');
-
-                // Return the score data from server
                 return {
                     percentage: result.data.percentage,
                     weightedScore: result.data.weightedScore,
                     totalPossibleWeightedScore: result.data.totalPossibleWeightedScore,
                     detailedResults: result.data.detailedResults,
-                    // Additional server-provided fields
                     category: result.data.category,
                     categoryLabel: result.data.categoryLabel,
                     interpretation: result.data.interpretation
                 };
 
             } catch (error) {
-                console.error('❌ Score calculation failed:', error);
+                console.error('Score calculation failed:', error);
 
-                // Show user-friendly error message
                 const errorMessage = getErrorMessage(error);
                 alert(errorMessage);
 
-                // Fallback: Return neutral result so the user isn't completely stuck
                 return {
                     percentage: 50,
                     weightedScore: 0,
@@ -1272,7 +1249,6 @@
             }
         }
 
-        // Get user-friendly error message
         function getErrorMessage(error) {
             const message = error.message || '';
 
@@ -1288,12 +1264,9 @@
             return 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt für eine persönliche Beratung.';
         }
 
-        // Calculate and Show Results - Server-Side Version
         async function calculateAndShowResults() {
-            // Hide question screen
             document.getElementById('questionScreen').classList.add('hidden');
 
-            // Show loading state in results screen
             const resultsScreen = document.getElementById('resultsScreen');
             resultsScreen.classList.remove('hidden');
             resultsScreen.innerHTML = `
@@ -1315,31 +1288,22 @@
             `;
 
             try {
-                // Get score from server (this is now async)
                 const scoreData = await calculateScore();
 
-                // Extract data from server response
-                // Server now provides category, categoryLabel, and interpretation
                 const percentage = scoreData.percentage;
                 const category = scoreData.category;
                 const categoryLabel = scoreData.categoryLabel;
                 const interpretation = scoreData.interpretation;
 
-                // Categorize detailed results
                 const positiveDetails = scoreData.detailedResults.filter(r => r.category === 'positive');
                 const neutralDetails = scoreData.detailedResults.filter(r => r.category === 'neutral');
                 const criticalDetails = scoreData.detailedResults.filter(r => r.category === 'critical');
 
-                // NOTE: Webhook is now sent server-side (in PHP) for security
-                // No need to send from client anymore
-
-                // Render results
                 renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
 
             } catch (error) {
                 console.error('Failed to show results:', error);
 
-                // Show error state
                 resultsScreen.innerHTML = `
                     <div style="text-align: center; padding: 4rem 2rem;">
                         <div style="font-size: 3rem; margin-bottom: 1rem;">⚠️</div>
@@ -1358,7 +1322,6 @@
             }
         }
 
-        // Render Results
         function renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails) {
             document.getElementById('questionScreen').classList.add('hidden');
             document.getElementById('progressWrapper').classList.add('hidden');
@@ -1500,11 +1463,6 @@
             resultsContainer.innerHTML = html;
         }
 
-        // NOTE: sendWebhook() function removed
-        // Webhook is now sent server-side (in PHP) for security
-        // See malta-assessment-evaluator.php for webhook implementation
-
-        // Add event listeners for contact form inputs
         document.addEventListener('input', (e) => {
             if (['geschlecht', 'vorname', 'nachname', 'email', 'terms'].includes(e.target.id)) {
                 updateNavigationButtons();
