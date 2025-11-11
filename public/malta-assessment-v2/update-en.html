@@ -1843,7 +1843,7 @@
                 html += `
                     <div class="form-group">
                         <input type="text" class="form-input" id="input_${question.id}"
-                            placeholder="Ihre Antwort..."
+                            placeholder="Your answer..."
                             value="${answers[question.id] || ''}"
                             onchange="updateTextAnswer('${question.id}', this.value)">
                     </div>
@@ -1852,7 +1852,7 @@
                 html += `
                     <div class="form-group">
                         <textarea class="form-textarea" id="input_${question.id}"
-                            placeholder="Optionale Angaben..."
+                            placeholder="Optional information..."
                             onchange="updateTextAnswer('${question.id}', this.value)">${answers[question.id] || ''}</textarea>
                     </div>
                 `;
@@ -2538,10 +2538,8 @@
 
             const t = translations;
 
-            // Welcome Screen
-            document.querySelector('.welcome-title').textContent = t.welcome.title;
-            document.querySelector('.welcome-text').textContent = t.welcome.description;
-
+            // Welcome Screen - Title and Description are hardcoded in HTML
+            // Only update dynamic features list
             const featuresList = document.querySelector('.welcome-features');
             featuresList.innerHTML = t.welcome.features.map(f => `<li>${f}</li>`).join('');
 

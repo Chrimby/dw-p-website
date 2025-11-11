@@ -2521,10 +2521,8 @@
 
             const t = translations;
 
-            // Welcome Screen
-            document.querySelector('.welcome-title').textContent = t.welcome.title;
-            document.querySelector('.welcome-text').textContent = t.welcome.description;
-
+            // Welcome Screen - Title and Description are hardcoded in HTML
+            // Only update dynamic features list
             const featuresList = document.querySelector('.welcome-features');
             featuresList.innerHTML = t.welcome.features.map(f => `<li>${f}</li>`).join('');
 
