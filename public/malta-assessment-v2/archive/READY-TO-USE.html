@@ -1499,80 +1499,6 @@
         };
 
         // =========================================================================
-        // TRACKING HELPER - GTM dataLayer, Meta, GA4, Google Ads, LinkedIn
-        // =========================================================================
-        function trackEvent(eventName, eventData = {}) {
-            // Google Tag Manager dataLayer
-            if (typeof window.dataLayer !== 'undefined') {
-                window.dataLayer.push({
-                    'event': eventName,
-                    ...eventData
-                });
-            }
-
-            // Meta Pixel (Facebook)
-            if (typeof fbq !== 'undefined') {
-                fbq('trackCustom', eventName, eventData);
-            }
-
-            // Google Analytics 4
-            if (typeof gtag !== 'undefined') {
-                gtag('event', eventName, eventData);
-            }
-
-            // LinkedIn Insight Tag
-            if (typeof lintrk !== 'undefined') {
-                lintrk('track', { conversion_id: eventName });
-            }
-        }
-
-        // Track conversion with value (for completed assessment)
-        function trackConversion(eventName, value, eventData = {}) {
-            // Google Tag Manager dataLayer - Conversion Event
-            if (typeof window.dataLayer !== 'undefined') {
-                window.dataLayer.push({
-                    'event': eventName,
-                    'eventCategory': 'Malta Assessment',
-                    'eventAction': 'Conversion',
-                    'eventLabel': eventName,
-                    'eventValue': value,
-                    'value': value,
-                    'currency': 'EUR',
-                    ...eventData
-                });
-            }
-
-            // Meta Pixel
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'Lead', {
-                    value: value,
-                    currency: 'EUR',
-                    content_name: eventName,
-                    ...eventData
-                });
-            }
-
-            // Google Analytics 4
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'conversion', {
-                    send_to: 'AW-CONVERSION_ID/AW-CONVERSION_LABEL',
-                    value: value,
-                    currency: 'EUR',
-                    event_label: eventName,
-                    ...eventData
-                });
-            }
-
-            // LinkedIn Conversion
-            if (typeof lintrk !== 'undefined') {
-                lintrk('track', { conversion_id: 'LINKEDIN_CONVERSION_ID' });
-            }
-
-            // Also track as custom event
-            trackEvent(eventName, { value, ...eventData });
-        }
-
-        // =========================================================================
         // LOAD TRANSLATIONS FROM JSON
         // =========================================================================
         let translations = null;
@@ -1806,11 +1732,6 @@
 
         // Initialize
         function startAssessment() {
-            // Track: Assessment Started
-            trackEvent('malta_assessment_started', {
-                language: CONFIG.language
-            });
-
             document.getElementById('welcomeScreen').classList.add('hidden');
             document.getElementById('questionScreen').classList.remove('hidden');
             document.getElementById('progressWrapper').classList.remove('hidden');
@@ -1825,24 +1746,37 @@
             updateProgress();
             updateNavigationButtons();
 
-            // Advisor quote from translations (if available)
-            const advisorQuote = translations?.advisor?.quotes?.[question.id] || null;
-            const advisorName = translations?.advisor?.name || 'Horst Wickinghoff';
-            const advisorRole = translations?.advisor?.role || 'Senior New Business Manager';
+            // Advisor quotes for better context
+            const advisorQuotes = {
+                'q001': 'Mit dieser Frage können wir einschätzen, wie groß der Aufwand wäre, Ihr Unternehmen in Malta weiterzuführen oder neu aufzubauen.',
+                'q002': 'Die internationale Ausrichtung ist entscheidend – Malta bietet besondere Vorteile für grenzüberschreitende Geschäftsmodelle.',
+                'q003': 'Der Wohnsitz ist ein kritischer Faktor. Für optimale steuerliche Vorteile sollten Sie mindestens 183 Tage in Malta verbringen.',
+                'q004': 'Verschiedene Geschäftsmodelle profitieren unterschiedlich stark von Malta. Digitale und Holdings sind besonders geeignet.',
+                'q005': 'Echte wirtschaftliche Substanz ist nicht nur gesetzlich erforderlich, sondern auch der Schlüssel zu steuerlicher Anerkennung.',
+                'q006': 'Compliance-Bereitschaft ist entscheidend. Malta folgt EU-Standards – das bedeutet höhere Anforderungen, aber auch Rechtssicherheit und Reputation.',
+                'q007': 'Bei mehreren physischen Niederlassungen bietet Malta als EU-Standort strategische Vorteile für Holding-Strukturen und Koordination.',
+                'q008': 'Bei hohen Margen lohnt sich Malta besonders. Die effektive Steuerbelastung kann deutlich reduziert werden.',
+                'q009': 'Die tatsächliche Geschäftsführung muss in Malta stattfinden – das ist die Grundlage für steuerliche Anerkennung.',
+                'q010': 'Malta bietet hervorragende Bedingungen für Holding-Strukturen mit steuerfreien Dividenden aus Beteiligungen.',
+                'q011': 'Als EU-Mitglied bietet Malta vollen Zugang zum Binnenmarkt – ein entscheidender Vorteil gegenüber Nicht-EU-Ländern.',
+                'q012': 'Die familiäre Situation ist oft ein unterschätzter Faktor. Malta bietet hohe Lebensqualität für Familien.'
+            };
+
+            const advisorQuote = advisorQuotes[question.id];
 
             let html = `
                 <div class="question-header">
                     <h3 class="question-text">${question.text}</h3>
                     ${question.helper ? `<p class="question-helper-text">${question.helper}</p>` : ''}
-                    ${advisorQuote && question.type !== 'contact' ? `
+                    ${advisorQuote ? `
                         <div class="advisor-quote">
-                            <div class="advisor-avatar" role="img" aria-label="${advisorName}"></div>
+                            <div class="advisor-avatar" role="img" aria-label="Horst Wickinghoff"></div>
                             <div class="advisor-content">
                                 <p class="advisor-text">"${advisorQuote}"</p>
                                 <div class="advisor-meta">
-                                    <div class="advisor-name">${advisorName}</div>
+                                    <div class="advisor-name">Horst Wickinghoff</div>
                                     <div class="advisor-separator"></div>
-                                    <div class="advisor-role">${advisorRole}</div>
+                                    <div class="advisor-role">Senior New Business Manager</div>
                                 </div>
                             </div>
                         </div>
@@ -2006,13 +1940,7 @@
             const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
 
             document.getElementById('progressBar').style.width = `${progress}%`;
-
-            // Use translation template
-            const progressText = translations?.ui?.progress?.text_template || 'Question {current} of {total}';
-            document.getElementById('progressText').textContent = progressText
-                .replace('{current}', currentQuestionIndex + 1)
-                .replace('{total}', totalQuestions);
-
+            document.getElementById('progressText').textContent = `Frage ${currentQuestionIndex + 1} von ${totalQuestions}`;
             document.getElementById('progressPercent').textContent = `${Math.round(progress)}%`;
         }
 
@@ -2129,35 +2057,6 @@
                 setTimeout(() => {
                     currentQuestionIndex++;
 
-                    // Track progress milestones
-                    const totalQuestions = questions.length;
-                    const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
-
-                    if (currentQuestionIndex === 2) { // Question 3 = 25%
-                        trackEvent('malta_assessment_progress_25', {
-                            language: CONFIG.language,
-                            question_number: currentQuestionIndex + 1
-                        });
-                    } else if (currentQuestionIndex === 5) { // Question 6 = 50%
-                        trackEvent('malta_assessment_progress_50', {
-                            language: CONFIG.language,
-                            question_number: currentQuestionIndex + 1
-                        });
-                    } else if (currentQuestionIndex === 8) { // Question 9 = 75%
-                        trackEvent('malta_assessment_progress_75', {
-                            language: CONFIG.language,
-                            question_number: currentQuestionIndex + 1
-                        });
-                    }
-
-                    // Track contact form view
-                    const nextQuestion = questions[currentQuestionIndex];
-                    if (nextQuestion && nextQuestion.type === 'contact') {
-                        trackEvent('malta_assessment_contact_form', {
-                            language: CONFIG.language
-                        });
-                    }
-
                     // Remove out animation
                     card.classList.remove('animating-out');
 
@@ -2269,14 +2168,6 @@
                 const category = scoreData.category;
                 const categoryLabel = scoreData.categoryLabel;
                 const interpretation = scoreData.interpretation;
-
-                // Track: Assessment Completed with Score as conversion value
-                trackConversion('malta_assessment_completed', percentage, {
-                    language: CONFIG.language,
-                    score: percentage,
-                    category: category,
-                    category_label: categoryLabel
-                });
 
                 // Categorize detailed results
                 const positiveDetails = scoreData.detailedResults.filter(r => r.category === 'positive');
@@ -2567,62 +2458,8 @@
         // =========================================================================
         function init() {
             console.log('✅ App initialized with language:', CONFIG.language);
-
-            // Apply translations to static UI elements
-            applyTranslations();
-
             // App is ready - welcome screen is already visible
             // User can click "Start Assessment" when ready
-        }
-
-        // =========================================================================
-        // APPLY TRANSLATIONS TO UI
-        // =========================================================================
-        function applyTranslations() {
-            if (!translations) return;
-
-            const t = translations;
-
-            // Welcome Screen
-            document.querySelector('.welcome-title').textContent = t.welcome.title;
-            document.querySelector('.welcome-text').textContent = t.welcome.description;
-
-            const featuresList = document.querySelector('.welcome-features');
-            featuresList.innerHTML = t.welcome.features.map(f => `<li>${f}</li>`).join('');
-
-            document.querySelector('.welcome-screen .btn-submit-dwp').textContent = t.ui.buttons.start;
-
-            // Navigation Buttons
-            document.getElementById('backBtn').innerHTML = t.ui.buttons.back;
-            document.getElementById('nextBtn').innerHTML = t.ui.buttons.next;
-
-            // Progress Bar - will be updated dynamically in updateProgress()
-
-            // Trust Bar - only if exists in translations
-            if (t.trustbar) {
-                const trustSignals = document.querySelectorAll('.trust-signal-title');
-                const trustSubtitles = document.querySelectorAll('.trust-signal-subtitle');
-
-                if (trustSignals[0] && t.trustbar.signals && t.trustbar.signals[0]) {
-                    trustSignals[0].textContent = t.trustbar.signals[0].value;
-                    trustSubtitles[0].textContent = t.trustbar.signals[0].label;
-                }
-                if (trustSignals[1] && t.trustbar.signals && t.trustbar.signals[1]) {
-                    trustSignals[1].textContent = t.trustbar.signals[1].value;
-                    trustSubtitles[1].textContent = t.trustbar.signals[1].label;
-                }
-                if (trustSignals[2] && t.trustbar.signals && t.trustbar.signals[2]) {
-                    trustSignals[2].textContent = t.trustbar.signals[2].value;
-                    trustSubtitles[2].textContent = t.trustbar.signals[2].label;
-                }
-
-                const teamLabel = document.querySelector('.trust-team-label');
-                if (teamLabel && t.trustbar.team_label) {
-                    teamLabel.textContent = t.trustbar.team_label;
-                }
-            }
-
-            console.log('✅ Translations applied to UI');
         }
 
         // Start loading translations when page loads

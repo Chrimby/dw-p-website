@@ -1,0 +1,123 @@
+{
+  "result": {
+    "score": 78,
+    "category": "good",
+    "categoryLabel": "Malta Well Suited",
+    "recommendation": "Malta offers significant advantages for your situation. With proper planning, this is a promising step. We help you find the optimal structure for your specific situation.",
+    "submissionLanguage": "DE"
+  },
+  "contact": {
+    "email": "max.mustermann@example.com",
+    "firstName": "Max",
+    "lastName": "Mustermann",
+    "fullName": "Max Mustermann",
+    "phone": "+49 123 456789",
+    "company": "Example GmbH"
+  },
+  "questionsAndAnswers": [
+    {
+      "questionId": "q001",
+      "question": "Welche Beschreibung trifft auf Ihre geschäftliche Situation zu?",
+      "answer": "Habe etabliertes Unternehmen (500k - 2M EUR Umsatz)",
+      "score": 8,
+      "weight": 2.0,
+      "category": "positive"
+    },
+    {
+      "questionId": "q002",
+      "question": "Wie international ist (oder wird) Ihr Geschäft ausgerichtet?",
+      "answer": "Voll international / digitales Geschäft",
+      "score": 10,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q003",
+      "question": "Sind Sie bereit, nach Malta umzuziehen und mindestens 183 Tage/Jahr dort zu verbringen?",
+      "answer": "Ja, aber nur temporär (2-3 Jahre)",
+      "score": 8,
+      "weight": 2.0,
+      "category": "positive"
+    },
+    {
+      "questionId": "q004",
+      "question": "Welches Geschäftsmodell beschreibt Ihr Unternehmen am besten?",
+      "answer": "SaaS / Digitale Produkte",
+      "score": 9,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q005",
+      "question": "Können Sie echte wirtschaftliche Substanz in Malta etablieren (Büro, Mitarbeiter, Management)?",
+      "answer": "Mittlere Substanz (kleines Büro, 1-2 lokale Teilzeit-Mitarbeiter)",
+      "score": 8,
+      "weight": 2.0,
+      "category": "positive"
+    },
+    {
+      "questionId": "q006",
+      "question": "Sind Sie bereit, höhere Compliance-Anforderungen zu akzeptieren?",
+      "answer": "Ja, bei vernünftigem Nutzen",
+      "score": 8,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q007",
+      "question": "Haben Sie Tochtergesellschaften in anderen Ländern oder planen Sie diese?",
+      "answer": "Ja, eine Tochtergesellschaft in einem anderen Land",
+      "score": 8,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q008",
+      "question": "Wie würden Sie Ihre Profitabilität einschätzen?",
+      "answer": "Solide Profitabilität",
+      "score": 9,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q009",
+      "question": "Wie wichtig ist EU-Marktzugang für Sie?",
+      "answer": "Sehr wichtig / kritisch für mein Geschäftsmodell",
+      "score": 10,
+      "weight": 1.5,
+      "category": "positive"
+    },
+    {
+      "questionId": "q010",
+      "question": "Haben Sie Erfahrung mit internationalen Unternehmensstrukturen?",
+      "answer": "Etwas Erfahrung",
+      "score": 7,
+      "weight": 1.0,
+      "category": "neutral"
+    },
+    {
+      "questionId": "q011",
+      "question": "Wie wichtig ist Ihnen Privatsphäre/Diskretion?",
+      "answer": "Etwas wichtig",
+      "score": 7,
+      "weight": 1.0,
+      "category": "neutral"
+    },
+    {
+      "questionId": "q012",
+      "question": "Wie ist Ihre familiäre Situation bezüglich eines Malta-Umzugs?",
+      "answer": "Familie neutral / flexibel",
+      "score": 8,
+      "weight": 1.5,
+      "category": "positive"
+    }
+  ],
+  "metadata": {
+    "timestamp": "2025-11-11 14:30:45",
+    "submissionLanguage": "DE",
+    "ip": "192.168.1.100",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)...",
+    "referrer": "https://www.drwerner.com/de/",
+    "source": "Malta Assessment QuickCheck v2.0"
+  }
+}

@@ -1,0 +1,52 @@
+      "excellent": {
+        "label": "Sehr gute Eignung",
+        "badge": "✅ Sehr gutes Ergebnis",
+        "title": "Malta ist sehr gut für Sie geeignet",
+        "subtitle": "Ihre Situation ist sehr gut für eine Malta-Struktur geeignet. Lassen Sie uns die Details besprechen und Ihre nächsten Schritte planen.",
+        "cta": "Jetzt Strategiegespräch vereinbaren",
+        "benefits": [
+          "Steueroptimierung durch Malta-Struktur (eff. 5% möglich)",
+          "EU-Marktzugang mit minimalen Hürden",
+          "Expatriate-Begleitung von Anfang an",
+          "Individueller Relocation-Fahrplan"
+        ]
+      },
+      "good": {
+        "label": "Gute Eignung",
+        "badge": "💡 Gutes Ergebnis",
+        "title": "Malta ist gut für Sie geeignet",
+        "subtitle": "Mit der richtigen Planung ist dies ein erfolgversprechender Schritt. Unsere Experten zeigen Ihnen den optimalen Weg.",
+        "cta": "Kostenlose Erstberatung buchen",
+        "benefits": [
+          "Analyse Ihrer individuellen Optimierungspotenziale",
+          "Konkrete Malta-Struktur für Ihr Business",
+          "Compliance & Substanz-Anforderungen klar erklärt",
+          "Transparente Kosten & Timeline"
+        ]
+      },
+      "moderate": {
+        "label": "Bedingte Eignung",
+        "badge": "🤝 Einzelfallprüfung empfohlen",
+        "title": "Malta ist bedingt geeignet",
+        "subtitle": "Malta bietet interessante Möglichkeiten für Sie. Eine Einzelfallprüfung ist empfohlen. Wir zeigen Ihnen, welche Schritte nötig sind.",
+        "cta": "Jetzt Möglichkeiten besprechen",
+        "benefits": [
+          "Welche Voraussetzungen Sie noch erfüllen müssen",
+          "Alternative Strukturen & Optionen",
+          "Realistische Einschätzung der Machbarkeit",
+          "Schritt-für-Schritt Umsetzungsplan"
+        ]
+      },
+      "fair": {
+        "label": "Eingeschränkte Eignung",
+        "badge": "📋 Einzelfallprüfung notwendig",
+        "title": "Malta könnte geeignet sein",
+        "subtitle": "Eine detaillierte Einzelfallprüfung ist notwendig. Lassen Sie uns gemeinsam herausfinden, wie wir Ihre Situation optimal gestalten.",
+        "cta": "Individuelle Beratung vereinbaren",
+        "benefits": [
+          "Detaillierte Machbarkeitsanalyse für Ihren Fall",
+          "Anpassungen & Optimierungen für Malta-Eignung",
+          "Alternative Standorte & Strukturen falls nötig",
+          "Ehrliche Einschätzung ohne Verkaufsdruck"
+        ]
+      },

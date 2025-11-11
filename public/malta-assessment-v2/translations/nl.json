@@ -1,0 +1,597 @@
+{
+  "meta": {
+    "title": "Malta Assessment - Dr. Werner & Partners",
+    "description": "Ontdek of Malta de juiste locatie voor u is. 12-14 vragen voor uw persoonlijke analyse.",
+    "lang": "nl"
+  },
+  "ui": {
+    "buttons": {
+      "start": "Nu starten →",
+      "next": "Verder →",
+      "back": "← Terug",
+      "submit_contact": "Mijn geschiktheidsscore ontvangen",
+      "cta_consultation": "Nu consult boeken"
+    },
+    "progress": {
+      "text_template": "Vraag {current} van {total}",
+      "example": "Vraag 1 van 14"
+    },
+    "results_cta_bar": {
+      "title": "Uw Malta-analyse is klaar",
+      "subtitle": "Claim nu uw gratis initiële consultatie",
+      "button": "Nu consult boeken"
+    },
+    "error_messages": {
+      "generic": "Er is een fout opgetreden. Probeer het opnieuw."
+    }
+  },
+  "welcome": {
+    "title": "Malta Assessment",
+    "description": "Ontdek of Malta de juiste locatie is voor u en uw onderneming. Beantwoord 14 korte vragen en ontvang een gedetailleerde evaluatie van uw geschiktheidsscore.",
+    "features": [
+      "12-14 minuten voor uw persoonlijke analyse",
+      "Gedetailleerde evaluatie met geschiktheidsscore (0-100%)",
+      "Concrete aanbevelingen voor actie",
+      "Gratis en vrijblijvend"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "text": "Wat beschrijft uw zakelijke situatie het best?",
+      "helper": "Kies de optie die het beste op u van toepassing is.",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "Ik ben van plan om in Malta een volledig nieuw bedrijf te starten",
+          "score": 8
+        },
+        {
+          "value": "2",
+          "label": "Ik heb een bestaand bedrijf (onder 500k EUR omzet)",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Ik heb een gevestigd bedrijf (500k - 2 miljoen EUR)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Ik heb een groter bedrijf (meer dan 2 miljoen EUR)",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Ik wil me eerst oriënteren / geen opgave",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "text": "Hoe internationaal is (of wordt) uw bedrijf georiënteerd?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nieuw bedrijf - plan internationale oriëntatie",
+          "score": 8
+        },
+        {
+          "value": "2",
+          "label": "Hoofdzakelijk lokaal, maar open voor internationale expansie",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Mix van lokale en internationale klanten",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Volledig internationaal / digitaal bedrijf",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Nog in planning / geen opgave",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "text": "Bent u bereid om naar Malta te verhuizen en daar minstens 183 dagen per jaar te verblijven?",
+      "helper": "Let op: Bij emigratie uit Nederland kan de vertrekbelasting van toepassing zijn.",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nee, absoluut niet",
+          "score": 3
+        },
+        {
+          "value": "2",
+          "label": "Met tegenzin, alleen indien absoluut noodzakelijk",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Ja, maar alleen tijdelijk (2-3 jaar)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Ja, bereid voor lange termijn",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "text": "Welk bedrijfsmodel beschrijft uw onderneming het beste?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Lokale dienstverlening met persoonlijk klantencontact",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "E-Commerce / Handel",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "SaaS / Digitale Producten",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Holding / Beleggingsmaatschappij",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Consultancy / Professionele Diensten (locatieonafhankelijk)",
+          "score": 8
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "text": "Kunt u echte economische substantie in Malta opbouwen (kantoor, werknemers, management)?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nee, alleen brievenbusfirma zonder activiteit",
+          "score": 3
+        },
+        {
+          "value": "2",
+          "label": "Minimale substantie (virtueel kantoor, geen werknemers)",
+          "score": 5
+        },
+        {
+          "value": "3",
+          "label": "Gematigde substantie (klein kantoor, 1-2 lokale parttimers)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Volledige substantie (eigen kantoor, meerdere fulltimers, management ter plaatse)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "text": "Bent u bereid hogere compliance-eisen te accepteren?",
+      "helper": "Malta valt onder strengere EU-regelgeving dan veel andere jurisdicties. Als u twijfelt, selecteer \"Onzeker\".",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nee, ik geef de voorkeur aan minimale compliance",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Onzeker / wil meer weten",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Ja, indien de voordelen passend zijn",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Ja, volledige compliance is belangrijk voor mij",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "text": "Heeft u al vestigingen in andere landen of bent u dit van plan?",
+      "helper": "Hiermee worden fysieke locaties bedoeld (kantoren, filialen, dochterondernemingen) - niet alleen internationale klanten.",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nee, en niet gepland",
+          "score": 6
+        },
+        {
+          "value": "2",
+          "label": "Nog niet, maar gepland voor de toekomst",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Ja, één vestiging in een ander land",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Ja, meerdere vestigingen / dochterondernemingen",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Onzeker / geen opgave",
+          "score": 6
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "text": "Hoe zou u uw winstgevendheid beoordelen?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Start-up - nog geen omzet",
+          "score": 7
+        },
+        {
+          "value": "2",
+          "label": "Gematigde marges (10-25%)",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Hoge marges (25-50%)",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Zeer hoge marges (meer dan 50%)",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Wil ik liever niet zeggen / weet nog niet",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "text": "Waar vindt het daadwerkelijke management en de strategische besluitvorming plaats?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Volledig in mijn huidige thuisland",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Overwegend in thuisland, gedeeltelijk Malta",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "In evenwicht tussen Malta en andere landen",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Volledig in Malta (bestuursvergaderingen, strategische beslissingen)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "text": "Bent u van plan om via uw Maltese vennootschap participaties aan te houden of te verwerven?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "Nee, geen participaties gepland",
+          "score": 5
+        },
+        {
+          "value": "2",
+          "label": "Mogelijk in de toekomst",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Ja, 1-2 participaties",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Ja, meerdere participaties / complexe holdingstructuur",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "text": "Hoe belangrijk is toegang tot de EU-interne markt en EU-rechtserkenning voor u?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Niet belangrijk, heb geen EU-klanten",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Enigszins belangrijk, enkele EU-zaken",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Zeer belangrijk, voornamelijk EU-zaken",
+          "score": 10
+        },
+        {
+          "value": "4",
+          "label": "Cruciaal, heb EU-paspoort nodig (bijv. FinTech)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "text": "Wat is uw gezinssituatie met betrekking tot een verhuizing naar Malta?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Gezin is strikt tegen verhuizing / onmogelijk",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Gezin sceptisch, maar kan worden overtuigd",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Gezin neutraal / flexibel",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Gezin ondersteunt verhuizing / alleenstaand zonder verplichtingen",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q015_contact",
+      "text": "Laatste Stap",
+      "helper": "Geef uw contactgegevens op zodat wij u toegang tot uw resultaten kunnen sturen.",
+      "type": "contact"
+    }
+  ],
+  "advisor": {
+    "name": "Horst Wickinghoff",
+    "role": "Senior New Business Manager",
+    "quotes": {
+      "q001": "Deze vraag helpt ons om de inspanning in te schatten die nodig is om uw bedrijf in Malta voort te zetten of op te richten.",
+      "q002": "Internationale oriëntatie is cruciaal - Malta biedt specifieke voordelen voor grensoverschrijdende bedrijfsmodellen.",
+      "q003": "Verblijfplaats is een kritische factor. Voor optimale fiscale voordelen moet u minimaal 183 dagen in Malta verblijven.",
+      "q004": "Verschillende bedrijfsmodellen profiteren verschillend van Malta. Digitale bedrijven en holdings zijn bijzonder geschikt.",
+      "q005": "Echte economische substantie is niet alleen wettelijk vereist, maar ook de sleutel tot fiscale erkenning.",
+      "q006": "Compliance-bereidheid is cruciaal. Malta volgt EU-normen - wat hogere eisen betekent, maar ook rechtszekerheid en reputatie.",
+      "q007": "Met meerdere fysieke vestigingen biedt Malta als EU-locatie strategische voordelen voor holdingstructuren en coördinatie.",
+      "q008": "Malta is bijzonder de moeite waard bij hoge marges. De effectieve belastingdruk kan aanzienlijk worden verminderd.",
+      "q009": "Daadwerkelijk management moet in Malta plaatsvinden - dit is de basis voor fiscale erkenning.",
+      "q010": "Malta biedt uitstekende voorwaarden voor holdingstructuren met belastingvrije dividenden uit participaties.",
+      "q011": "Als EU-lid biedt Malta volledige toegang tot de interne markt - een beslissend voordeel ten opzichte van niet-EU-landen.",
+      "q012": "De gezinssituatie is vaak een onderschatte factor. Malta biedt een hoge levenskwaliteit voor gezinnen."
+    }
+  },
+  "contact": {
+    "form": {
+      "geschlecht_placeholder": "Selecteer alstublieft",
+      "geschlecht_options": {
+        "frau": "Mevr.",
+        "herr": "Dhr."
+      },
+      "vorname_placeholder": "Uw Voornaam",
+      "nachname_placeholder": "Uw Achternaam",
+      "email_placeholder": "Uw E-mailadres",
+      "privacy_label": "Ik ga akkoord met het <a href=\"https://www.drwerner.com/nl/other/privacy-policy/\" target=\"_blank\">Privacybeleid</a>. Ik ga ook akkoord met het ontvangen van e-mails met betrekking tot de Malta Assessment."
+    },
+    "trust_elements": [
+      {
+        "title": "100% AVG-conform",
+        "description": "Uw gegevens worden verwerkt en beveiligd volgens AVG-normen."
+      },
+      {
+        "title": "Automatische Verwijdering na 7 Dagen",
+        "description": "Uw resultaten worden na een week automatisch uit ons systeem verwijderd."
+      },
+      {
+        "title": "SSL-Versleutelde Overdracht",
+        "description": "Alle gegevens worden versleuteld verzonden en veilig opgeslagen."
+      },
+      {
+        "title": "Geen Delen met Derden",
+        "description": "Uw informatie blijft vertrouwelijk en wordt niet met derden gedeeld."
+      },
+      {
+        "title": "Opt-out Op Elk Moment",
+        "description": "U kunt zich op elk moment afmelden voor e-mails. Geen spam, alleen relevante informatie."
+      }
+    ]
+  },
+  "results": {
+    "header": {
+      "congratulations_template": "Gefeliciteerd, {gender} {lastname}!",
+      "gender_map": {
+        "Frau": "Mevr.",
+        "Herr": "Dhr."
+      },
+      "score_label": "Punten",
+      "benchmark_label": "Classificatie:",
+      "benchmark_text": "Onze beoordeling volgt strikte criteria om langdurig succes in Malta te waarborgen. Het gemiddelde resultaat van onze klanten is 58 punten – uw resultaat toont hoe goed uw individuele situatie bij Malta past."
+    },
+    "categories": {
+      "excellent": {
+        "label": "Zeer goede geschiktheid",
+        "badge": "✅ Zeer goed resultaat",
+        "title": "Malta is zeer geschikt voor u",
+        "subtitle": "Uw situatie is zeer geschikt voor een Malta-structuur. Laten we de details bespreken en uw volgende stappen plannen.",
+        "cta": "Nu Strategiegesprek Plannen",
+        "benefits": [
+          "Belastingoptimalisatie via Malta-structuur (eff. 5% mogelijk)",
+          "EU-markttoegang met minimale barrières",
+          "Expat-begeleiding vanaf dag één",
+          "Individuele verhuisroadmap"
+        ]
+      },
+      "good": {
+        "label": "Goede geschiktheid",
+        "badge": "💡 Goed resultaat",
+        "title": "Malta is goed geschikt voor u",
+        "subtitle": "Met de juiste planning is dit een veelbelovende stap. Onze experts tonen u de optimale weg.",
+        "cta": "Gratis Initieel Consult Boeken",
+        "benefits": [
+          "Analyse van uw individuele optimalisatiepotentieel",
+          "Concrete Malta-structuur voor uw bedrijf",
+          "Compliance & substantie-eisen duidelijk uitgelegd",
+          "Transparante kosten & tijdlijn"
+        ]
+      },
+      "moderate": {
+        "label": "Voorwaardelijke Geschiktheid",
+        "badge": "🤝 Individuele beoordeling aanbevolen",
+        "title": "Malta is voorwaardelijk geschikt",
+        "subtitle": "Malta biedt interessante mogelijkheden voor u. Een individuele beoordeling wordt aanbevolen. Wij tonen u welke stappen nodig zijn.",
+        "cta": "Nu Mogelijkheden Bespreken",
+        "benefits": [
+          "Welke vereisten u nog moet voldoen",
+          "Alternatieve structuren & opties",
+          "Realistische beoordeling van haalbaarheid",
+          "Stapsgewijs implementatieplan"
+        ]
+      },
+      "fair": {
+        "label": "Beperkte Geschiktheid",
+        "badge": "📋 Individuele beoordeling vereist",
+        "title": "Malta zou geschikt kunnen zijn",
+        "subtitle": "Een gedetailleerde individuele beoordeling is noodzakelijk. Laten we samen ontdekken hoe we uw situatie optimaal kunnen inrichten.",
+        "cta": "Individueel Consult Plannen",
+        "benefits": [
+          "Gedetailleerde haalbaarheidsanalyse voor uw geval",
+          "Aanpassingen & optimalisaties voor Malta-geschiktheid",
+          "Alternatieve locaties & structuren indien nodig",
+          "Eerlijke beoordeling zonder verkoopdruk"
+        ]
+      },
+      "explore": {
+        "label": "Verdere Beoordeling Noodzakelijk",
+        "badge": "📞 Persoonlijk Consult",
+        "title": "Laten We Praten",
+        "subtitle": "Uw situatie is complex en vereist individueel advies. Samen vinden we de beste oplossing voor u.",
+        "cta": "Consult Plannen",
+        "benefits": [
+          "Volledige analyse van uw uitgangspositie",
+          "Malta vs. andere locaties: Wat past bij u?",
+          "Creatieve oplossingen voor complexe gevallen",
+          "Langetermijn belasting- & locatiestrategie"
+        ]
+      }
+    },
+    "details": {
+      "positive_title": "Positieve Factoren",
+      "neutral_title": "Neutrale Factoren",
+      "critical_title": "Kritieke Factoren",
+      "your_answer_label": "Uw Antwoord:",
+      "rating_label": "Beoordeling:",
+      "rating_suffix": "%",
+      "question_prefix": "Vraag"
+    },
+    "cta": {
+      "experts_label": "Uw Malta-experts",
+      "experts_experience": "Jarenlange ervaring met Malta-structuren",
+      "benefits_title": "Wat u Kunt Verwachten in het Consult:",
+      "footer_text": "✓ Gratis & vrijblijvend  ·  ✓ 30 Min. Initieel Consult  ·  ✓ Geen Verplichting"
+    }
+  },
+  "trust": {
+    "bar": {
+      "signals": [
+        {
+          "title": "CSP-Licentie",
+          "subtitle": "Gereguleerd door Malta Financial Services Authority"
+        },
+        {
+          "title": "3.000+",
+          "subtitle": "Succesvolle bedrijfsoprichtingen sinds 2013"
+        },
+        {
+          "title": "97%",
+          "subtitle": "Van onze klanten blijft na oprichting"
+        }
+      ],
+      "team_label": "Uw Adviesteam"
+    }
+  }
+}

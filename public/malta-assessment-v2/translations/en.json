@@ -1,0 +1,597 @@
+{
+  "meta": {
+    "title": "Malta Suitability Check - Dr. Werner & Partners",
+    "description": "Find out if Malta is the right location for you. 12-14 questions for your personalised analysis.",
+    "lang": "en"
+  },
+  "ui": {
+    "buttons": {
+      "start": "Get Started →",
+      "next": "Continue →",
+      "back": "← Back",
+      "submit_contact": "Get My Suitability Score",
+      "cta_consultation": "Book Consultation Now"
+    },
+    "progress": {
+      "text_template": "Question {current} of {total}",
+      "example": "Question 1 of 14"
+    },
+    "results_cta_bar": {
+      "title": "Your Malta Analysis is Ready",
+      "subtitle": "Secure your free initial consultation now",
+      "button": "Book Consultation Now"
+    },
+    "error_messages": {
+      "generic": "An error occurred. Please try again."
+    }
+  },
+  "welcome": {
+    "title": "Malta Suitability Check",
+    "description": "Find out if Malta is the right location for you and your business. Answer 14 short questions and receive a detailed evaluation of your suitability score.",
+    "features": [
+      "12-14 minutes for your personalised analysis",
+      "Detailed evaluation with suitability score (0-100%)",
+      "Concrete recommendations for action",
+      "Free and non-binding"
+    ]
+  },
+  "questions": [
+    {
+      "id": "q001",
+      "text": "Which best describes your business situation?",
+      "helper": "Choose the option that best applies to you.",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "I plan to start a completely new business in Malta",
+          "score": 8
+        },
+        {
+          "value": "2",
+          "label": "I have an existing business (under 500k EUR turnover)",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "I have an established business (500k - 2 million EUR)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "I have a larger business (over 2 million EUR)",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "I'd like to explore first / prefer not to say",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q002",
+      "text": "How internationally oriented is (or will be) your business?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "New business - planning international orientation",
+          "score": 8
+        },
+        {
+          "value": "2",
+          "label": "Mainly local, but open to international expansion",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Mix of local and international clients",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Fully international / digital business",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Still planning / prefer not to say",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q003",
+      "text": "Are you willing to relocate to Malta and spend at least 183 days per year there?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "No, definitely not",
+          "score": 3
+        },
+        {
+          "value": "2",
+          "label": "Reluctantly, only if absolutely necessary",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Yes, but only temporarily (2-3 years)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Yes, willing long-term",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q004",
+      "text": "Which business model best describes your company?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Local service with personal customer contact",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "E-Commerce / Trading",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "SaaS / Digital Products",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Holding / Investment Company",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Consulting / Professional Services (location-independent)",
+          "score": 8
+        }
+      ]
+    },
+    {
+      "id": "q005",
+      "text": "Can you establish genuine economic substance in Malta (office, employees, management)?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 2.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "No, only letterbox company without activity",
+          "score": 3
+        },
+        {
+          "value": "2",
+          "label": "Minimal substance (virtual office, no employees)",
+          "score": 5
+        },
+        {
+          "value": "3",
+          "label": "Moderate substance (small office, 1-2 local part-time employees)",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Full substance (own office, several full-time employees, on-site management)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q006",
+      "text": "Are you willing to accept higher compliance requirements?",
+      "helper": "Malta is subject to stricter EU regulations than many other jurisdictions. If you're unsure, select \"Unsure\".",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "No, I prefer minimal compliance",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Unsure / would like to learn more",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Yes, if the benefits are appropriate",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Yes, full compliance is important to me",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q007",
+      "text": "Do you already have or plan to have establishments in other countries?",
+      "helper": "This refers to physical locations (offices, branches, subsidiaries) - not just international clients.",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "No, and not planned",
+          "score": 6
+        },
+        {
+          "value": "2",
+          "label": "Not yet, but planned for the future",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Yes, one establishment in another country",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Yes, multiple establishments / subsidiaries",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Unsure / prefer not to say",
+          "score": 6
+        }
+      ]
+    },
+    {
+      "id": "q008",
+      "text": "How would you assess your profitability?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Start-up - no revenue yet",
+          "score": 7
+        },
+        {
+          "value": "2",
+          "label": "Moderate margins (10-25%)",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "High margins (25-50%)",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Very high margins (over 50%)",
+          "score": 10
+        },
+        {
+          "value": "5",
+          "label": "Prefer not to say / don't know yet",
+          "score": 7
+        }
+      ]
+    },
+    {
+      "id": "q009",
+      "text": "Where will actual management and strategic decision-making take place?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Entirely in my current home country",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Predominantly in home country, partially Malta",
+          "score": 6
+        },
+        {
+          "value": "3",
+          "label": "Balanced between Malta and other countries",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Entirely in Malta (board meetings, strategic decisions)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q010",
+      "text": "Do you plan to hold or acquire participations through your Malta company?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.0,
+      "options": [
+        {
+          "value": "1",
+          "label": "No, no participations planned",
+          "score": 5
+        },
+        {
+          "value": "2",
+          "label": "Possibly in the future",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Yes, 1-2 participations",
+          "score": 9
+        },
+        {
+          "value": "4",
+          "label": "Yes, multiple participations / complex holding structure",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q011",
+      "text": "How important is access to the EU single market and EU legal recognition?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Not important, have no EU clients",
+          "score": 2
+        },
+        {
+          "value": "2",
+          "label": "Somewhat important, some EU business",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Very important, mainly EU business",
+          "score": 10
+        },
+        {
+          "value": "4",
+          "label": "Critical, require EU passporting (e.g. FinTech)",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q012",
+      "text": "What is your family situation regarding a Malta relocation?",
+      "helper": "",
+      "type": "single_choice",
+      "required": true,
+      "weight": 1.5,
+      "options": [
+        {
+          "value": "1",
+          "label": "Family strictly against relocation / impossible",
+          "score": 4
+        },
+        {
+          "value": "2",
+          "label": "Family sceptical, but could be convinced",
+          "score": 7
+        },
+        {
+          "value": "3",
+          "label": "Family neutral / flexible",
+          "score": 8
+        },
+        {
+          "value": "4",
+          "label": "Family supports relocation / single without obligations",
+          "score": 10
+        }
+      ]
+    },
+    {
+      "id": "q015_contact",
+      "text": "Final Step",
+      "helper": "Provide your contact details so we can send you access to your results.",
+      "type": "contact"
+    }
+  ],
+  "advisor": {
+    "name": "Horst Wickinghoff",
+    "role": "Senior New Business Manager",
+    "quotes": {
+      "q001": "This question helps us assess the effort required to continue or establish your business in Malta.",
+      "q002": "International orientation is crucial - Malta offers particular advantages for cross-border business models.",
+      "q003": "Residence is a critical factor. For optimal tax benefits, you should spend at least 183 days in Malta.",
+      "q004": "Different business models benefit differently from Malta. Digital businesses and holdings are particularly suitable.",
+      "q005": "Genuine economic substance is not only legally required, but also the key to tax recognition.",
+      "q006": "Compliance readiness is crucial. Malta follows EU standards - meaning higher requirements, but also legal certainty and reputation.",
+      "q007": "With multiple physical establishments, Malta as an EU location offers strategic advantages for holding structures and coordination.",
+      "q008": "Malta is particularly worthwhile with high margins. The effective tax burden can be significantly reduced.",
+      "q009": "Actual management must take place in Malta - this is the basis for tax recognition.",
+      "q010": "Malta offers excellent conditions for holding structures with tax-free dividends from participations.",
+      "q011": "As an EU member, Malta offers full access to the single market - a decisive advantage over non-EU countries.",
+      "q012": "The family situation is often an underestimated factor. Malta offers high quality of life for families."
+    }
+  },
+  "contact": {
+    "form": {
+      "geschlecht_placeholder": "Please select",
+      "geschlecht_options": {
+        "frau": "Ms.",
+        "herr": "Mr."
+      },
+      "vorname_placeholder": "Your First Name",
+      "nachname_placeholder": "Your Last Name",
+      "email_placeholder": "Your Email Address",
+      "privacy_label": "I agree to the <a href=\"https://www.drwerner.com/en/other/privacy-policy/\" target=\"_blank\">Privacy Policy</a>. I also agree to receive emails related to the Malta Suitability Check."
+    },
+    "trust_elements": [
+      {
+        "title": "100% GDPR Compliant",
+        "description": "Your data is processed and secured according to GDPR standards."
+      },
+      {
+        "title": "Automatic Deletion After 7 Days",
+        "description": "Your results are automatically deleted from our system after one week."
+      },
+      {
+        "title": "SSL-Encrypted Transfer",
+        "description": "All data is transmitted encrypted and stored securely."
+      },
+      {
+        "title": "No Sharing With Third Parties",
+        "description": "Your information remains confidential and is not shared with third parties."
+      },
+      {
+        "title": "Opt-Out Anytime",
+        "description": "You can unsubscribe from emails at any time. No spam, only relevant information."
+      }
+    ]
+  },
+  "results": {
+    "header": {
+      "congratulations_template": "Congratulations, {gender} {lastname}!",
+      "gender_map": {
+        "Frau": "Ms.",
+        "Herr": "Mr."
+      },
+      "score_label": "Points",
+      "benchmark_label": "Classification:",
+      "benchmark_text": "Our assessment follows strict criteria to ensure long-term success in Malta. The average result of our clients is 58 points – your result shows how well your individual situation fits Malta."
+    },
+    "categories": {
+      "excellent": {
+        "label": "Very Good Suitability",
+        "badge": "✅ Very Good Result",
+        "title": "Malta is very well suited for you",
+        "subtitle": "Your situation is very well suited for a Malta structure. Let's discuss the details and plan your next steps.",
+        "cta": "Schedule Strategy Call Now",
+        "benefits": [
+          "Tax optimisation through Malta structure (eff. 5% possible)",
+          "EU market access with minimal barriers",
+          "Expatriate support from day one",
+          "Individual relocation roadmap"
+        ]
+      },
+      "good": {
+        "label": "Good Suitability",
+        "badge": "💡 Good Result",
+        "title": "Malta is well suited for you",
+        "subtitle": "With proper planning, this is a promising step. Our experts will show you the optimal path forward.",
+        "cta": "Book Free Initial Consultation",
+        "benefits": [
+          "Analysis of your individual optimisation potential",
+          "Concrete Malta structure for your business",
+          "Compliance & substance requirements clearly explained",
+          "Transparent costs & timeline"
+        ]
+      },
+      "moderate": {
+        "label": "Conditional Suitability",
+        "badge": "🤝 Case-by-case review recommended",
+        "title": "Malta is conditionally suitable",
+        "subtitle": "Malta offers interesting opportunities for you. A case-by-case review is recommended. We'll show you what steps are necessary.",
+        "cta": "Discuss Opportunities Now",
+        "benefits": [
+          "What requirements you still need to meet",
+          "Alternative structures & options",
+          "Realistic assessment of feasibility",
+          "Step-by-step implementation plan"
+        ]
+      },
+      "fair": {
+        "label": "Limited Suitability",
+        "badge": "📋 Case-by-case review required",
+        "title": "Malta could be suitable",
+        "subtitle": "A detailed case-by-case review is required. Let's work together to find the best approach for your situation.",
+        "cta": "Schedule Individual Consultation",
+        "benefits": [
+          "Detailed feasibility analysis for your case",
+          "Adjustments & optimisations for Malta suitability",
+          "Alternative locations & structures if necessary",
+          "Honest assessment without sales pressure"
+        ]
+      },
+      "explore": {
+        "label": "Further Review Required",
+        "badge": "📞 Personal Consultation",
+        "title": "Let's Talk",
+        "subtitle": "Your situation is complex and requires individual consultation. Together we'll find the best solution for you.",
+        "cta": "Schedule Consultation",
+        "benefits": [
+          "Complete analysis of your starting position",
+          "Malta vs. other locations: What suits you?",
+          "Creative solutions for complex cases",
+          "Long-term tax & location strategy"
+        ]
+      }
+    },
+    "details": {
+      "positive_title": "Positive Factors",
+      "neutral_title": "Neutral Factors",
+      "critical_title": "Critical Factors",
+      "your_answer_label": "Your Answer:",
+      "rating_label": "Rating:",
+      "rating_suffix": "%",
+      "question_prefix": "Question"
+    },
+    "cta": {
+      "experts_label": "Your Malta Experts",
+      "experts_experience": "Years of experience with Malta structures",
+      "benefits_title": "What to Expect in the Consultation:",
+      "footer_text": "✓ Free & non-binding  ·  ✓ 30 Min. Initial Consultation  ·  ✓ No Obligation"
+    }
+  },
+  "trust": {
+    "bar": {
+      "signals": [
+        {
+          "title": "CSP License",
+          "subtitle": "Regulated by Malta Financial Services Authority"
+        },
+        {
+          "title": "3,000+",
+          "subtitle": "Successful company formations since 2013"
+        },
+        {
+          "title": "97%",
+          "subtitle": "Of our clients stay after incorporation"
+        }
+      ],
+      "team_label": "Your Advisory Team"
+    }
+  }
+}

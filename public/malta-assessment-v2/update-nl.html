@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malta Eignungscheck - Dr. Werner & Partner</title>
-    <meta name="description" content="Finden Sie heraus, ob Malta der richtige Standort für Sie ist. 12-14 Fragen für Ihre personalisierte Analyse.">
+    <title>Malta Assessment - Dr. Werner & Partner</title>
+    <meta name="description" content="Ontdek of Malta de juiste locatie is voor u en uw onderneming. 12-14 vragen voor uw persoonlijke analyse.">
 
     <!-- Adobe Fonts (Typekit) - Dr. Werner & Partners Brand Fonts -->
     <link rel="stylesheet" href="https://use.typekit.net/lsl4kqd.css">
@@ -1399,7 +1399,7 @@
                 <div class="progress-overall-fill" id="progressBar" style="width: 0%"></div>
             </div>
             <div class="progress-labels">
-                <span id="progressText">Frage 1 von 14</span>
+                <span id="progressText">Vraag 1 van 14</span>
                 <strong id="progressPercent">0%</strong>
             </div>
         </div>
@@ -1410,11 +1410,11 @@
         <div class="progress-container">
             <div class="results-cta-content">
                 <div class="results-cta-text">
-                    <div class="results-cta-title">Ihre Malta-Analyse ist fertig</div>
-                    <div class="results-cta-subtitle">Sichern Sie sich jetzt Ihre kostenlose Erstberatung</div>
+                    <div class="results-cta-title">Uw Malta-analyse is klaar</div>
+                    <div class="results-cta-subtitle">Verzeker u nu van uw gratis eerste consultatie</div>
                 </div>
-                <a href="https://www.drwerner.com/kontakt/" target="_blank" class="results-cta-button">
-                    Jetzt Beratung buchen
+                <a href="https://www.drwerner.com/nl/overige/een-afspraak-maken/" target="_blank" class="results-cta-button">
+                    Boek nu een consultatie
                 </a>
             </div>
         </div>
@@ -1427,19 +1427,18 @@
             <div id="welcomeScreen" class="welcome-shell">
                 <div class="welcome-screen">
                     <div class="welcome-content">
-                        <h1 class="welcome-title">Malta Eignungscheck</h1>
+                        <h1 class="welcome-title">Malta Assessment</h1>
                         <p class="welcome-text">
-                            Finden Sie heraus, ob Malta der richtige Standort für Sie und Ihr Unternehmen ist.
-                            Beantworten Sie 14 kurze Fragen und erhalten Sie eine detaillierte Auswertung Ihres Eignungsgrades.
+                            Ontdek of Malta de juiste locatie is voor u en uw onderneming. Beantwoord 14 korte vragen en ontvang een gedetailleerde evaluatie van uw geschiktheidsscore.
                         </p>
                         <ul class="welcome-features">
-                            <li>12-14 Minuten für Ihre personalisierte Analyse</li>
-                            <li>Detaillierte Auswertung mit Eignungsgrad (0-100%)</li>
-                            <li>Konkrete Handlungsempfehlungen</li>
-                            <li>Kostenfrei und unverbindlich</li>
+                            <li>12-14 minuten voor uw persoonlijke analyse</li>
+                            <li>Gedetailleerde evaluatie met geschiktheidsscore (0-100%)</li>
+                            <li>Concrete aanbevelingen voor actie</li>
+                            <li>Gratis en vrijblijvend</li>
                         </ul>
                         <button class="btn-submit-dwp" onclick="startAssessment()">
-                            Jetzt starten →
+                            Start nu →
                         </button>
                     </div>
                 </div>
@@ -1454,10 +1453,10 @@
                 <!-- Navigation Buttons -->
                 <div class="btn-group">
                     <button class="btn btn-secondary" id="backBtn" onclick="previousQuestion()">
-                        ← Zurück
+                        ← Terug
                     </button>
                     <button class="btn btn-submit-dwp" id="nextBtn" onclick="nextQuestion()" disabled>
-                        Weiter →
+                        Volgende →
                     </button>
                 </div>
             </div>
@@ -1473,21 +1472,9 @@
 
     <script>
         // =========================================================================
-        // LANGUAGE AUTO-DETECTION (from URL)
+        // LANGUAGE FIXED: DUTCH VERSION
         // =========================================================================
-        const DETECTED_LANGUAGE = (() => {
-            const path = window.location.pathname.toLowerCase();
-            if (path.includes('/en/')) {
-                console.log('✅ Language detected: EN (from URL)');
-                return 'en';
-            }
-            if (path.includes('/nl/')) {
-                console.log('✅ Language detected: NL (from URL)');
-                return 'nl';
-            }
-            console.log('✅ Language detected: DE (fallback)');
-            return 'de';
-        })();
+        const DETECTED_LANGUAGE = 'nl';
 
         // WordPress AJAX Configuration
         // The nonce is automatically injected by WordPress (see malta-assessment-wordpress.php)
@@ -1495,7 +1482,7 @@
             apiEndpoint: window.maltaAssessment?.ajaxUrl || 'https://www.drwerner.com/wp-admin/admin-ajax.php',
             nonce: window.maltaAssessment?.nonce || '',
             translationsPath: window.qcMaltaTranslationsPath || '/wp-content/uploads/malta-assessment-v2/translations',
-            language: DETECTED_LANGUAGE
+            language: 'nl'
         };
 
         // =========================================================================
@@ -1581,7 +1568,6 @@
         async function loadTranslations() {
             try {
                 const jsonPath = `${CONFIG.translationsPath}/${CONFIG.language}.json`;
-                console.log(`📥 Loading translations from: ${jsonPath}`);
 
                 const response = await fetch(jsonPath);
                 if (!response.ok) {
@@ -1589,7 +1575,6 @@
                 }
 
                 translations = await response.json();
-                console.log(`✅ Translations loaded successfully for ${CONFIG.language}`);
 
                 // Initialize questions from translations
                 questions = translations.questions || [];
@@ -1597,10 +1582,8 @@
                 // Initialize the app
                 init();
             } catch (error) {
-                console.error('❌ Translation loading failed:', error);
                 // Fallback: Load German as default
                 if (CONFIG.language !== 'de') {
-                    console.log('⚠️  Falling back to German translations...');
                     CONFIG.language = 'de';
                     const jsonPath = `${CONFIG.translationsPath}/de.json`;
                     const response = await fetch(jsonPath);
@@ -2185,25 +2168,14 @@
         async function calculateScore() {
             try {
                 // Debug: Check nonce availability
-                console.log('CONFIG:', CONFIG);
-                console.log('window.maltaAssessment:', window.maltaAssessment);
-
                 if (!CONFIG.nonce) {
-                    console.error('⚠️ Nonce is missing! WordPress integration may not be loaded correctly.');
+                    // Nonce is missing - WordPress integration may not be loaded correctly
                 }
 
                 // Prepare FormData for WordPress AJAX
                 const formData = new FormData();
                 formData.append('action', 'malta_assess_submit');
                 formData.append('nonce', CONFIG.nonce);
-                // Auto-detect language from URL path
-                const detectedLanguage = (() => {
-                    const path = window.location.pathname.toLowerCase();
-                    if (path.includes('/en/')) return 'en';
-                    if (path.includes('/nl/')) return 'nl';
-                    return 'de'; // fallback
-                })();
-
                 formData.append('data', JSON.stringify({
                     answers: answers,
                     email: userContact.email || '',
@@ -2211,34 +2183,22 @@
                     lastName: userContact.nachname || '',
                     phone: userContact.telefon || '',
                     company: userContact.firma || '',
-                    language: detectedLanguage
+                    language: 'nl' // Dutch version
                 }));
-
-                console.log('Sending to:', CONFIG.apiEndpoint);
-                console.log('FormData:', {
-                    action: 'malta_assess_submit',
-                    nonce: CONFIG.nonce,
-                    hasData: !!formData.get('data')
-                });
 
                 const response = await fetch(CONFIG.apiEndpoint, {
                     method: 'POST',
                     body: formData
                 });
 
-                console.log('Response status:', response.status);
-
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('Server error response:', errorText);
                     throw new Error(`Server responded with ${response.status}: ${errorText}`);
                 }
 
                 const result = await response.json();
-                console.log('Server result:', result);
 
                 if (!result.success) {
-                    console.error('Server returned error:', result);
                     throw new Error(result.data?.message || result.message || 'Evaluation failed');
                 }
 
@@ -2254,7 +2214,6 @@
                 };
 
             } catch (error) {
-                console.error('Score calculation error:', error);
                 throw error;
             }
         }
@@ -2288,7 +2247,6 @@
                 renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
 
             } catch (error) {
-                console.error('Error calculating results:', error);
                 alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
             }
         }
@@ -2566,8 +2524,6 @@
         // INITIALIZE APP - Load translations first, then render welcome screen
         // =========================================================================
         function init() {
-            console.log('✅ App initialized with language:', CONFIG.language);
-
             // Apply translations to static UI elements
             applyTranslations();
 
@@ -2621,8 +2577,6 @@
                     teamLabel.textContent = t.trustbar.team_label;
                 }
             }
-
-            console.log('✅ Translations applied to UI');
         }
 
         // Start loading translations when page loads
@@ -2643,8 +2597,8 @@
                 <!-- CSP License -->
                 <div class="trust-signal">
                     <div class="trust-signal-text">
-                        <div class="trust-signal-title">CSP-Lizenz</div>
-                        <div class="trust-signal-subtitle">Reguliert durch Malta Financial Services Authority</div>
+                        <div class="trust-signal-title">CSP-licentie</div>
+                        <div class="trust-signal-subtitle">Gereguleerd door Malta Financial Services Authority</div>
                     </div>
                 </div>
 
@@ -2654,7 +2608,7 @@
                 <div class="trust-signal">
                     <div class="trust-signal-text">
                         <div class="trust-signal-title">3.000+</div>
-                        <div class="trust-signal-subtitle">Erfolgreiche Firmengründungen seit 2013</div>
+                        <div class="trust-signal-subtitle">Succesvolle bedrijfsoprichtingen sinds 2013</div>
                     </div>
                 </div>
 
@@ -2666,7 +2620,7 @@
                 <div class="trust-signal">
                     <div class="trust-signal-text">
                         <div class="trust-signal-title">97%</div>
-                        <div class="trust-signal-subtitle">Unserer Mandanten bleiben auch nach Gründung</div>
+                        <div class="trust-signal-subtitle">Van onze klanten blijft ook na oprichting</div>
                     </div>
                 </div>
             </div>
@@ -2675,16 +2629,16 @@
             <div class="trust-bar-team">
                 <div class="trust-team-avatars">
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-12.jpg" alt="Berater 1">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-12.jpg" alt="Adviseur 1">
                     </div>
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-70.jpg" alt="Berater 2">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-70.jpg" alt="Adviseur 2">
                     </div>
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-1.jpg" alt="Berater 3">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-1.jpg" alt="Adviseur 3">
                     </div>
                 </div>
-                <div class="trust-team-label">Ihr Beratungsteam</div>
+                <div class="trust-team-label">Uw adviespanel</div>
             </div>
         </div>
     </div>

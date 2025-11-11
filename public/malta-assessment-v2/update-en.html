@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Malta Eignungscheck - Dr. Werner & Partner</title>
-    <meta name="description" content="Finden Sie heraus, ob Malta der richtige Standort für Sie ist. 12-14 Fragen für Ihre personalisierte Analyse.">
+<!-- Adobe Fonts (Typekit) - Dr. Werner & Partners Brand Fonts -->
+<link rel="stylesheet" href="https://use.typekit.net/lsl4kqd.css">
 
-    <!-- Adobe Fonts (Typekit) - Dr. Werner & Partners Brand Fonts -->
-    <link rel="stylesheet" href="https://use.typekit.net/lsl4kqd.css">
-
-    <style>
+<style>
         /* CSS Custom Properties - Dr. Werner & Partners Brand */
         :root {
             /* Brand Colors */
@@ -1390,16 +1382,15 @@
         }
 
     </style>
-</head>
-<body>
-    <!-- Progress Bar -->
+
+<!-- Progress Bar -->
     <div class="progress-wrapper hidden" id="progressWrapper">
         <div class="progress-container">
             <div class="progress-overall-track">
                 <div class="progress-overall-fill" id="progressBar" style="width: 0%"></div>
             </div>
             <div class="progress-labels">
-                <span id="progressText">Frage 1 von 14</span>
+                <span id="progressText">Question 1 of 14</span>
                 <strong id="progressPercent">0%</strong>
             </div>
         </div>
@@ -1410,11 +1401,11 @@
         <div class="progress-container">
             <div class="results-cta-content">
                 <div class="results-cta-text">
-                    <div class="results-cta-title">Ihre Malta-Analyse ist fertig</div>
-                    <div class="results-cta-subtitle">Sichern Sie sich jetzt Ihre kostenlose Erstberatung</div>
+                    <div class="results-cta-title">Your Malta Analysis is Ready</div>
+                    <div class="results-cta-subtitle">Secure your free initial consultation now</div>
                 </div>
-                <a href="https://www.drwerner.com/kontakt/" target="_blank" class="results-cta-button">
-                    Jetzt Beratung buchen
+                <a href="https://www.drwerner.com/en/other/book-an-appointment/" target="_blank" class="results-cta-button">
+                    Book Consultation Now
                 </a>
             </div>
         </div>
@@ -1427,19 +1418,18 @@
             <div id="welcomeScreen" class="welcome-shell">
                 <div class="welcome-screen">
                     <div class="welcome-content">
-                        <h1 class="welcome-title">Malta Eignungscheck</h1>
+                        <h1 class="welcome-title">Malta Suitability Check</h1>
                         <p class="welcome-text">
-                            Finden Sie heraus, ob Malta der richtige Standort für Sie und Ihr Unternehmen ist.
-                            Beantworten Sie 14 kurze Fragen und erhalten Sie eine detaillierte Auswertung Ihres Eignungsgrades.
+                            Find out if Malta is the right location for you and your business. Answer 14 short questions and receive a detailed evaluation of your suitability score.
                         </p>
                         <ul class="welcome-features">
-                            <li>12-14 Minuten für Ihre personalisierte Analyse</li>
-                            <li>Detaillierte Auswertung mit Eignungsgrad (0-100%)</li>
-                            <li>Konkrete Handlungsempfehlungen</li>
-                            <li>Kostenfrei und unverbindlich</li>
+                            <li>12-14 minutes for your personalised analysis</li>
+                            <li>Detailed evaluation with suitability score (0-100%)</li>
+                            <li>Concrete recommendations for action</li>
+                            <li>Free and non-binding</li>
                         </ul>
                         <button class="btn-submit-dwp" onclick="startAssessment()">
-                            Jetzt starten →
+                            Get Started →
                         </button>
                     </div>
                 </div>
@@ -1454,10 +1444,10 @@
                 <!-- Navigation Buttons -->
                 <div class="btn-group">
                     <button class="btn btn-secondary" id="backBtn" onclick="previousQuestion()">
-                        ← Zurück
+                        ← Back
                     </button>
                     <button class="btn btn-submit-dwp" id="nextBtn" onclick="nextQuestion()" disabled>
-                        Weiter →
+                        Continue →
                     </button>
                 </div>
             </div>
@@ -1473,21 +1463,9 @@
 
     <script>
         // =========================================================================
-        // LANGUAGE AUTO-DETECTION (from URL)
+        // LANGUAGE FIXED: ENGLISH VERSION
         // =========================================================================
-        const DETECTED_LANGUAGE = (() => {
-            const path = window.location.pathname.toLowerCase();
-            if (path.includes('/en/')) {
-                console.log('✅ Language detected: EN (from URL)');
-                return 'en';
-            }
-            if (path.includes('/nl/')) {
-                console.log('✅ Language detected: NL (from URL)');
-                return 'nl';
-            }
-            console.log('✅ Language detected: DE (fallback)');
-            return 'de';
-        })();
+        const DETECTED_LANGUAGE = 'en';
 
         // WordPress AJAX Configuration
         // The nonce is automatically injected by WordPress (see malta-assessment-wordpress.php)
@@ -1495,7 +1473,7 @@
             apiEndpoint: window.maltaAssessment?.ajaxUrl || 'https://www.drwerner.com/wp-admin/admin-ajax.php',
             nonce: window.maltaAssessment?.nonce || '',
             translationsPath: window.qcMaltaTranslationsPath || '/wp-content/uploads/malta-assessment-v2/translations',
-            language: DETECTED_LANGUAGE
+            language: 'en'
         };
 
         // =========================================================================
@@ -1581,7 +1559,6 @@
         async function loadTranslations() {
             try {
                 const jsonPath = `${CONFIG.translationsPath}/${CONFIG.language}.json`;
-                console.log(`📥 Loading translations from: ${jsonPath}`);
 
                 const response = await fetch(jsonPath);
                 if (!response.ok) {
@@ -1589,7 +1566,6 @@
                 }
 
                 translations = await response.json();
-                console.log(`✅ Translations loaded successfully for ${CONFIG.language}`);
 
                 // Initialize questions from translations
                 questions = translations.questions || [];
@@ -1597,10 +1573,8 @@
                 // Initialize the app
                 init();
             } catch (error) {
-                console.error('❌ Translation loading failed:', error);
                 // Fallback: Load German as default
                 if (CONFIG.language !== 'de') {
-                    console.log('⚠️  Falling back to German translations...');
                     CONFIG.language = 'de';
                     const jsonPath = `${CONFIG.translationsPath}/de.json`;
                     const response = await fetch(jsonPath);
@@ -1608,7 +1582,7 @@
                     questions = translations.questions || [];
                     init();
                 } else {
-                    alert('Fehler beim Laden der Übersetzungen. Bitte Seite neu laden.');
+                    alert('Error loading translations. Please reload the page.');
                 }
             }
         }
@@ -1887,28 +1861,28 @@
                     <div class="contact-grid">
                         <div class="form-group">
                             <select class="form-select" id="geschlecht" required>
-                                <option value="">Bitte wählen Sie</option>
-                                <option value="Frau" ${userContact.geschlecht === 'Frau' ? 'selected' : ''}>Frau</option>
-                                <option value="Herr" ${userContact.geschlecht === 'Herr' ? 'selected' : ''}>Herr</option>
+                                <option value="">Please select</option>
+                                <option value="Frau" ${userContact.geschlecht === 'Frau' ? 'selected' : ''}>Ms.</option>
+                                <option value="Herr" ${userContact.geschlecht === 'Herr' ? 'selected' : ''}>Mr.</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-input" id="vorname"
-                                placeholder="Ihr Vorname" value="${userContact.vorname || ''}" required>
+                                placeholder="Your First Name" value="${userContact.vorname || ''}" required>
                         </div>
                         <div class="form-group">
                             <input type="text" class="form-input" id="nachname"
-                                placeholder="Ihr Nachname" value="${userContact.nachname || ''}" required>
+                                placeholder="Your Last Name" value="${userContact.nachname || ''}" required>
                         </div>
                         <div class="form-group">
                             <input type="email" class="form-input" id="email"
-                                placeholder="Ihre Email-Adresse" value="${userContact.email || ''}" required>
+                                placeholder="Your Email Address" value="${userContact.email || ''}" required>
                         </div>
                         <div class="checkbox-wrapper">
                             <input type="checkbox" class="checkbox-input" id="terms" ${userContact.terms ? 'checked' : ''}>
                             <label class="checkbox-label" for="terms">
-                                Ich stimme der <a href="https://www.drwerner.com/de/other/privacy-policy/" target="_blank">Datenschutzerklärung</a> zu.
-                                Ich stimme außerdem zu, E-Mails im Zusammenhang mit dem Malta Eignungscheck zu erhalten.
+                                I agree to the <a href="https://www.drwerner.com/en/other/privacy-policy/" target="_blank">Privacy Policy</a>.
+                                I also agree to receive emails related to the Malta Suitability Check.
                             </label>
                         </div>
                     </div>
@@ -1916,7 +1890,7 @@
                     <!-- Submit Button below Contact Form -->
                     <div style="margin-top: 2rem; margin-bottom: 2rem;">
                         <button class="btn btn-submit-green" id="submitContactBtn" style="width: 100%; font-size: 1.125rem; padding: 1rem 2rem;" disabled>
-                            Jetzt Eignungsgrad erfahren
+                            Get My Suitability Score
                         </button>
                     </div>
 
@@ -1929,7 +1903,7 @@
                                 </svg>
                                 <div>
                                     <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">100% GDPR Compliant</div>
-                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Ihre Daten werden nach DSGVO-Standards verarbeitet und gesichert.</div>
+                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Your data is processed and secured according to GDPR standards.</div>
                                 </div>
                             </div>
 
@@ -1938,8 +1912,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                 </svg>
                                 <div>
-                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">Automatische Löschung nach 7 Tagen</div>
-                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Ihre Ergebnisse werden nach einer Woche automatisch aus unserem System gelöscht.</div>
+                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">Automatic Deletion After 7 Days</div>
+                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Your results are automatically deleted from our system after one week.</div>
                                 </div>
                             </div>
 
@@ -1948,8 +1922,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
                                 </svg>
                                 <div>
-                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">SSL-Verschlüsselte Übertragung</div>
-                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Alle Daten werden verschlüsselt übertragen und sicher gespeichert.</div>
+                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">SSL-Encrypted Transfer</div>
+                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">All data is transmitted encrypted and stored securely.</div>
                                 </div>
                             </div>
 
@@ -1958,8 +1932,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
                                 </svg>
                                 <div>
-                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">Keine Weitergabe an Dritte</div>
-                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Ihre Informationen bleiben vertraulich und werden nicht an Dritte weitergegeben.</div>
+                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">No Sharing With Third Parties</div>
+                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Your information remains confidential and is not shared with third parties.</div>
                                 </div>
                             </div>
 
@@ -1968,8 +1942,8 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
                                 </svg>
                                 <div>
-                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">Opt-Out jederzeit möglich</div>
-                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">Sie können sich jederzeit von E-Mails abmelden. Kein Spam, nur relevante Informationen.</div>
+                                    <div style="font-weight: 600; color: var(--color-primary); font-size: 0.9375rem; margin-bottom: 0.25rem;">Opt-Out Anytime</div>
+                                    <div style="font-size: 0.875rem; color: var(--color-gray-600); line-height: 1.5;">You can unsubscribe from emails at any time. No spam, only relevant information.</div>
                                 </div>
                             </div>
                         </div>
@@ -2055,7 +2029,7 @@
                 // Reset to normal blue button
                 nextBtn.classList.remove('btn-submit-green');
                 nextBtn.classList.add('btn-submit-dwp');
-                nextBtn.textContent = 'Weiter →';
+                nextBtn.textContent = 'Continue →';
 
                 if (question.required) {
                     isValid = !!answers[question.id];
@@ -2185,25 +2159,14 @@
         async function calculateScore() {
             try {
                 // Debug: Check nonce availability
-                console.log('CONFIG:', CONFIG);
-                console.log('window.maltaAssessment:', window.maltaAssessment);
-
                 if (!CONFIG.nonce) {
-                    console.error('⚠️ Nonce is missing! WordPress integration may not be loaded correctly.');
+                    // Nonce is missing - WordPress integration may not be loaded correctly
                 }
 
                 // Prepare FormData for WordPress AJAX
                 const formData = new FormData();
                 formData.append('action', 'malta_assess_submit');
                 formData.append('nonce', CONFIG.nonce);
-                // Auto-detect language from URL path
-                const detectedLanguage = (() => {
-                    const path = window.location.pathname.toLowerCase();
-                    if (path.includes('/en/')) return 'en';
-                    if (path.includes('/nl/')) return 'nl';
-                    return 'de'; // fallback
-                })();
-
                 formData.append('data', JSON.stringify({
                     answers: answers,
                     email: userContact.email || '',
@@ -2211,34 +2174,22 @@
                     lastName: userContact.nachname || '',
                     phone: userContact.telefon || '',
                     company: userContact.firma || '',
-                    language: detectedLanguage
+                    language: 'en' // English version
                 }));
-
-                console.log('Sending to:', CONFIG.apiEndpoint);
-                console.log('FormData:', {
-                    action: 'malta_assess_submit',
-                    nonce: CONFIG.nonce,
-                    hasData: !!formData.get('data')
-                });
 
                 const response = await fetch(CONFIG.apiEndpoint, {
                     method: 'POST',
                     body: formData
                 });
 
-                console.log('Response status:', response.status);
-
                 if (!response.ok) {
                     const errorText = await response.text();
-                    console.error('Server error response:', errorText);
                     throw new Error(`Server responded with ${response.status}: ${errorText}`);
                 }
 
                 const result = await response.json();
-                console.log('Server result:', result);
 
                 if (!result.success) {
-                    console.error('Server returned error:', result);
                     throw new Error(result.data?.message || result.message || 'Evaluation failed');
                 }
 
@@ -2254,7 +2205,6 @@
                 };
 
             } catch (error) {
-                console.error('Score calculation error:', error);
                 throw error;
             }
         }
@@ -2288,8 +2238,7 @@
                 renderResults(percentage, category, categoryLabel, interpretation, positiveDetails, neutralDetails, criticalDetails);
 
             } catch (error) {
-                console.error('Error calculating results:', error);
-                alert('Es ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.');
+                alert('An error occurred. Please try again.');
             }
         }
 
@@ -2451,6 +2400,25 @@
 
             const resultsContainer = document.querySelector('.results-screen');
 
+            // Get translations
+            const scoreLabel = translations?.results?.header?.score_label || 'Points';
+            const genderMap = translations?.results?.header?.gender_map || { 'Frau': 'Ms.', 'Herr': 'Mr.' };
+            const congratsTemplate = translations?.results?.header?.congratulations_template || 'Congratulations, {gender} {lastname}!';
+            const benchmarkLabel = translations?.results?.header?.benchmark_label || 'Classification:';
+            const benchmarkText = translations?.results?.header?.benchmark_text || 'Our assessment follows strict criteria to ensure long-term success in Malta. The average result of our clients is 58 points – your result shows how well your individual situation fits Malta.';
+
+            const positiveTitle = translations?.results?.details?.positive_title || 'Positive Factors';
+            const neutralTitle = translations?.results?.details?.neutral_title || 'Neutral Factors';
+            const criticalTitle = translations?.results?.details?.critical_title || 'Critical Factors';
+            const yourAnswerLabel = translations?.results?.details?.your_answer_label || 'Your Answer:';
+            const ratingLabel = translations?.results?.details?.rating_label || 'Rating:';
+            const questionPrefix = translations?.results?.details?.question_prefix || 'Question';
+
+            const genderText = genderMap[userContact.geschlecht] || userContact.geschlecht;
+            const congratsText = congratsTemplate
+                .replace('{gender}', genderText)
+                .replace('{lastname}', userContact.nachname);
+
             let html = `
                 <div class="results-header">
                     <div class="results-score-circle">
@@ -2462,17 +2430,16 @@
                                 transform="rotate(-90 90 90)"
                                 style="transition: stroke-dasharray 1s ease-out"/>
                             <text x="90" y="85" text-anchor="middle" font-size="48" font-weight="600" fill="var(--color-primary)" font-family="var(--font-heading)">${percentage}</text>
-                            <text x="90" y="110" text-anchor="middle" font-size="20" fill="var(--color-gray-500)" font-family="var(--font-body)">Punkte</text>
+                            <text x="90" y="110" text-anchor="middle" font-size="20" fill="var(--color-gray-500)" font-family="var(--font-body)">${scoreLabel}</text>
                         </svg>
                     </div>
-                    <h2 class="results-title">Herzlichen Glückwunsch, ${userContact.geschlecht === 'Frau' ? 'Frau' : 'Herr'} ${userContact.nachname}!</h2>
+                    <h2 class="results-title">${congratsText}</h2>
                     <div class="results-category-badge ${category}">
                         <span class="badge-icon">✓</span>
                         <span class="badge-text">${categoryLabel}</span>
                     </div>
                     <p class="results-benchmark">
-                        <strong>Einordnung:</strong> Unsere Bewertung erfolgt nach strengen Kriterien, die langfristigen Erfolg in Malta sicherstellen.
-                        Das durchschnittliche Ergebnis unserer Mandanten liegt bei 58 Punkten – Ihr Resultat zeigt, wie gut Ihre individuelle Situation zu Malta passt.
+                        <strong>${benchmarkLabel}</strong> ${benchmarkText}
                     </p>
                     <p class="results-interpretation">${interpretation}</p>
                 </div>
@@ -2481,16 +2448,16 @@
                 <div class="details-section">
                     <div class="details-category">
                         <div class="details-category-header">
-                            <h3 class="details-category-title">Positive Faktoren</h3>
+                            <h3 class="details-category-title">${positiveTitle}</h3>
                             <span class="details-category-badge positive">${positiveDetails.length}</span>
                         </div>
                         ${positiveDetails.map((detail, index) => `
                             <div class="detail-card">
-                                <h4 class="detail-question">Frage ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
+                                <h4 class="detail-question">${questionPrefix} ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
                                 <div class="detail-row">
-                                    <div><strong>Ihre Antwort:</strong> ${detail.answer}</div>
+                                    <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">Bewertung: ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2502,16 +2469,16 @@
                 <div class="details-section">
                     <div class="details-category">
                         <div class="details-category-header">
-                            <h3 class="details-category-title">Neutrale Faktoren</h3>
+                            <h3 class="details-category-title">${neutralTitle}</h3>
                             <span class="details-category-badge neutral">${neutralDetails.length}</span>
                         </div>
                         ${neutralDetails.map((detail, index) => `
                             <div class="detail-card">
-                                <h4 class="detail-question">Frage ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
+                                <h4 class="detail-question">${questionPrefix} ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
                                 <div class="detail-row">
-                                    <div><strong>Ihre Antwort:</strong> ${detail.answer}</div>
+                                    <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">Bewertung: ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2523,16 +2490,16 @@
                 <div class="details-section">
                     <div class="details-category">
                         <div class="details-category-header">
-                            <h3 class="details-category-title">Kritische Faktoren</h3>
+                            <h3 class="details-category-title">${criticalTitle}</h3>
                             <span class="details-category-badge critical">${criticalDetails.length}</span>
                         </div>
                         ${criticalDetails.map((detail, index) => `
                             <div class="detail-card">
-                                <h4 class="detail-question">Frage ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
+                                <h4 class="detail-question">${questionPrefix} ${questions.findIndex(q => q.id === detail.questionId) + 1}: ${detail.questionText}</h4>
                                 <div class="detail-row">
-                                    <div><strong>Ihre Antwort:</strong> ${detail.answer}</div>
+                                    <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">Bewertung: ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2566,8 +2533,6 @@
         // INITIALIZE APP - Load translations first, then render welcome screen
         // =========================================================================
         function init() {
-            console.log('✅ App initialized with language:', CONFIG.language);
-
             // Apply translations to static UI elements
             applyTranslations();
 
@@ -2621,8 +2586,6 @@
                     teamLabel.textContent = t.trustbar.team_label;
                 }
             }
-
-            console.log('✅ Translations applied to UI');
         }
 
         // Start loading translations when page loads
@@ -2643,8 +2606,8 @@
                 <!-- CSP License -->
                 <div class="trust-signal">
                     <div class="trust-signal-text">
-                        <div class="trust-signal-title">CSP-Lizenz</div>
-                        <div class="trust-signal-subtitle">Reguliert durch Malta Financial Services Authority</div>
+                        <div class="trust-signal-title">CSP License</div>
+                        <div class="trust-signal-subtitle">Regulated by Malta Financial Services Authority</div>
                     </div>
                 </div>
 
@@ -2653,8 +2616,8 @@
                 <!-- Success -->
                 <div class="trust-signal">
                     <div class="trust-signal-text">
-                        <div class="trust-signal-title">3.000+</div>
-                        <div class="trust-signal-subtitle">Erfolgreiche Firmengründungen seit 2013</div>
+                        <div class="trust-signal-title">3,000+</div>
+                        <div class="trust-signal-subtitle">Successful company formations since 2013</div>
                     </div>
                 </div>
 
@@ -2666,7 +2629,7 @@
                 <div class="trust-signal">
                     <div class="trust-signal-text">
                         <div class="trust-signal-title">97%</div>
-                        <div class="trust-signal-subtitle">Unserer Mandanten bleiben auch nach Gründung</div>
+                        <div class="trust-signal-subtitle">Of our clients stay after incorporation</div>
                     </div>
                 </div>
             </div>
@@ -2675,16 +2638,16 @@
             <div class="trust-bar-team">
                 <div class="trust-team-avatars">
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-12.jpg" alt="Berater 1">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-12.jpg" alt="Consultant 1">
                     </div>
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-70.jpg" alt="Berater 2">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-70.jpg" alt="Consultant 2">
                     </div>
                     <div class="trust-team-avatar">
-                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-1.jpg" alt="Berater 3">
+                        <img src="https://www.drwerner.com/wp-content/uploads/2025/10/Brixon-Borg-1.jpg" alt="Consultant 3">
                     </div>
                 </div>
-                <div class="trust-team-label">Ihr Beratungsteam</div>
+                <div class="trust-team-label">Your Consulting Team</div>
             </div>
         </div>
     </div>
