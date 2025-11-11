@@ -1881,7 +1881,7 @@
                         <div class="checkbox-wrapper">
                             <input type="checkbox" class="checkbox-input" id="terms" ${userContact.terms ? 'checked' : ''}>
                             <label class="checkbox-label" for="terms">
-                                I agree to the <a href="https://www.drwerner.com/en/other/privacy-policy/" target="_blank">Privacy Policy</a>.
+                                I agree to the <a href="https://www.drwerner.com/en/other/datenschutzerklaerung/" target="_blank">Privacy Policy</a>.
                                 I also agree to receive emails related to the Malta Suitability Check.
                             </label>
                         </div>
@@ -2252,71 +2252,25 @@
                 }
             ];
 
-            // Category-specific messaging
-            const categoryMessages = {
-                excellent: {
-                    badge: '🌟 Hervorragendes Ergebnis',
-                    title: `Malta ist perfekt für Sie!`,
-                    subtitle: 'Ihre Situation ist ideal für eine Malta-Struktur. Lassen Sie uns die Details besprechen und Ihre Relocation planen.',
-                    cta: 'Jetzt Strategiegespräch vereinbaren',
-                    benefits: [
-                        'Steueroptimierung durch Malta-Struktur (eff. 5% möglich)',
-                        'EU-Marktzugang mit minimalen Hürden',
-                        'Expatriate-Begleitung von Anfang an',
-                        'Individueller Relocation-Fahrplan'
-                    ]
-                },
-                good: {
-                    badge: '✅ Sehr gutes Ergebnis',
-                    title: `Malta bietet große Chancen für Sie!`,
-                    subtitle: 'Mit der richtigen Planung können Sie alle Vorteile Maltas nutzen. Unsere Experten zeigen Ihnen den Weg.',
-                    cta: 'Kostenlose Erstberatung buchen',
-                    benefits: [
-                        'Analyse Ihrer individuellen Optimierungspotenziale',
-                        'Konkrete Malta-Struktur für Ihr Business',
-                        'Compliance & Substanz-Anforderungen klar erklärt',
-                        'Transparente Kosten & Timeline'
-                    ]
-                },
-                moderate: {
-                    badge: '💡 Gutes Potenzial',
-                    title: `Malta ist erreichbar!`,
-                    subtitle: 'Mit einigen Anpassungen können Sie von Maltas Vorteilen profitieren. Wir zeigen Ihnen, welche Schritte nötig sind.',
-                    cta: 'Jetzt Möglichkeiten besprechen',
-                    benefits: [
-                        'Welche Voraussetzungen Sie noch erfüllen müssen',
-                        'Alternative Strukturen & Optionen',
-                        'Realistische Einschätzung der Machbarkeit',
-                        'Schritt-für-Schritt Umsetzungsplan'
-                    ]
-                },
-                fair: {
-                    badge: '🤝 Beratung empfohlen',
-                    title: `Wir finden eine Lösung für Sie!`,
-                    subtitle: 'Malta ist möglich – lassen Sie uns gemeinsam herausfinden, wie wir Ihre Situation optimal gestalten.',
-                    cta: 'Individuelle Beratung vereinbaren',
-                    benefits: [
-                        'Detaillierte Machbarkeitsanalyse für Ihren Fall',
-                        'Anpassungen & Optimierungen für Malta-Eignung',
-                        'Alternative Standorte & Strukturen falls nötig',
-                        'Ehrliche Einschätzung ohne Verkaufsdruck'
-                    ]
-                },
-                explore: {
-                    badge: '📞 Persönliches Gespräch',
-                    title: `Lassen Sie uns sprechen`,
-                    subtitle: 'Ihre Situation ist komplex und erfordert eine individuelle Beratung. Gemeinsam finden wir die beste Lösung für Sie.',
-                    cta: 'Beratungstermin vereinbaren',
-                    benefits: [
-                        'Vollständige Analyse Ihrer Ausgangssituation',
-                        'Malta vs. andere Standorte: Was passt zu Ihnen?',
-                        'Kreative Lösungen für komplexe Fälle',
-                        'Langfristige Steuer- & Standortstrategie'
-                    ]
-                }
+            // Get translated texts from JSON
+            const t = translations?.results || {};
+            const categoryData = t.categories?.[category] || {};
+            const ctaData = t.cta || {};
+
+            // Build category-specific message from translations
+            const msg = {
+                badge: categoryData.badge || '',
+                title: categoryData.title || '',
+                subtitle: categoryData.subtitle || '',
+                cta: categoryData.cta || '',
+                benefits: categoryData.benefits || []
             };
 
-            const msg = categoryMessages[category] || categoryMessages.explore;
+            // Get global CTA texts
+            const expertsLabel = ctaData.experts_label || 'Your Malta Experts';
+            const expertsExperience = ctaData.experts_experience || 'Years of experience with Malta structures';
+            const benefitsTitle = ctaData.benefits_title || 'What to Expect in the Consultation:';
+            const footerText = ctaData.footer_text || '✓ Free & non-binding  ·  ✓ 30 Min. Initial Consultation  ·  ✓ No Obligation';
 
             return `
                 <div class="results-cta-section" style="background: white; border-radius: calc(var(--radius) * 1.5); margin-top: 3rem; overflow: hidden; box-shadow: 0 8px 32px rgba(10, 10, 10, 0.12); border: 1px solid var(--color-gray-200);">
@@ -2332,7 +2286,7 @@
                     <!-- Team Section -->
                     <div style="padding: 2rem; background: var(--color-gray-50);">
                         <div style="text-align: center; margin-bottom: 1.5rem;">
-                            <p style="font-size: 0.875rem; color: var(--color-gray-600); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">Ihre Malta-Experten</p>
+                            <p style="font-size: 0.875rem; color: var(--color-gray-600); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem;">${expertsLabel}</p>
                             <div style="display: flex; justify-content: center; align-items: center; gap: -0.75rem; margin-bottom: 1rem;">
                                 ${teamMembers.map(member => `
                                     <div style="position: relative; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; border: 3px solid white; box-shadow: 0 2px 8px rgba(10, 10, 10, 0.15);">
@@ -2340,12 +2294,12 @@
                                     </div>
                                 `).join('')}
                             </div>
-                            <p style="font-size: 0.8125rem; color: var(--color-gray-500); margin: 0;">Jahrelange Erfahrung mit Malta-Strukturen</p>
+                            <p style="font-size: 0.8125rem; color: var(--color-gray-500); margin: 0;">${expertsExperience}</p>
                         </div>
 
                         <!-- CTA Button -->
                         <div style="text-align: center; margin-bottom: 1.5rem;">
-                            <button onclick="window.open('https://www.drwerner.com/kontakt/', '_blank')"
+                            <button onclick="window.open('https://www.drwerner.com/en/other/book-an-appointment/', '_blank')"
                                 style="display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem; padding: 1rem 2.625rem; font-size: 1.125rem; font-weight: 700; font-family: var(--font-body); background: #10b981; color: white; border: 2px solid white; border-radius: 99px; cursor: pointer; transition: all 0.2s ease; box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3); text-decoration: none; border: none;"
                                 onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(16, 185, 129, 0.4)'; this.style.background='#059669'"
                                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 16px rgba(16, 185, 129, 0.3)'; this.style.background='#10b981'">
@@ -2358,14 +2312,14 @@
 
                         <div style="text-align: center;">
                             <p style="font-size: 0.8125rem; color: var(--color-gray-500); margin: 0;">
-                                ✓ Kostenlos & unverbindlich &nbsp;·&nbsp; ✓ 30 Min. Erstberatung &nbsp;·&nbsp; ✓ Keine Verpflichtung
+                                ${footerText}
                             </p>
                         </div>
                     </div>
 
                     <!-- Benefits -->
                     <div style="padding: 2rem; background: white; border-top: 1px solid var(--color-gray-200);">
-                        <h4 style="font-family: var(--font-heading); font-size: 1.125rem; margin-bottom: 1.25rem; color: var(--color-primary); text-align: center;">Das erwartet Sie im Gespräch:</h4>
+                        <h4 style="font-family: var(--font-heading); font-size: 1.125rem; margin-bottom: 1.25rem; color: var(--color-primary); text-align: center;">${benefitsTitle}</h4>
                         <ul style="list-style: none; padding: 0; margin: 0; display: grid; gap: 0.875rem; max-width: 520px; margin: 0 auto;">
                             ${msg.benefits.map(benefit => `
                                 <li style="display: flex; align-items: start; gap: 0.75rem;">
@@ -2402,6 +2356,7 @@
             const criticalTitle = translations?.results?.details?.critical_title || 'Critical Factors';
             const yourAnswerLabel = translations?.results?.details?.your_answer_label || 'Your Answer:';
             const ratingLabel = translations?.results?.details?.rating_label || 'Rating:';
+            const ratingSuffix = translations?.results?.details?.rating_suffix || '%';
             const questionPrefix = translations?.results?.details?.question_prefix || 'Question';
 
             const genderText = genderMap[userContact.geschlecht] || userContact.geschlecht;
@@ -2447,7 +2402,7 @@
                                 <div class="detail-row">
                                     <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}${ratingSuffix}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2468,7 +2423,7 @@
                                 <div class="detail-row">
                                     <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}${ratingSuffix}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2489,7 +2444,7 @@
                                 <div class="detail-row">
                                     <div><strong>${yourAnswerLabel}</strong> ${detail.answer}</div>
                                     ${detail.answerDescription ? `<div class="detail-rationale">${detail.answerDescription}</div>` : ''}
-                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}%</div>
+                                    <div class="detail-score">${ratingLabel} ${detail.score * 10}${ratingSuffix}</div>
                                 </div>
                             </div>
                         `).join('')}
@@ -2548,6 +2503,23 @@
             // Navigation Buttons
             document.getElementById('backBtn').innerHTML = t.ui.buttons.back;
             document.getElementById('nextBtn').innerHTML = t.ui.buttons.next;
+
+            // Submit Contact Button
+            const submitContactBtn = document.getElementById('submitContactBtn');
+            if (submitContactBtn && t.ui.buttons.submit_contact) {
+                submitContactBtn.textContent = t.ui.buttons.submit_contact;
+            }
+
+            // Results CTA Bar (sticky header on results page)
+            if (t.ui.results_cta_bar) {
+                const ctaTitle = document.querySelector('.results-cta-title');
+                const ctaSubtitle = document.querySelector('.results-cta-subtitle');
+                const ctaButton = document.querySelector('.results-cta-button');
+
+                if (ctaTitle) ctaTitle.textContent = t.ui.results_cta_bar.title;
+                if (ctaSubtitle) ctaSubtitle.textContent = t.ui.results_cta_bar.subtitle;
+                if (ctaButton) ctaButton.textContent = t.ui.results_cta_bar.button;
+            }
 
             // Progress Bar - will be updated dynamically in updateProgress()
 

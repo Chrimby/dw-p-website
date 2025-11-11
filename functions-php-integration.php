@@ -293,7 +293,7 @@ function malta_assess_handle_submission() {
          * < 75%: "Malta ist gut geeignet"
          * ≥ 75%: "Malta ist sehr gut geeignet"
          */
-        $interpretation = malta_assess_get_interpretation($scoreData['percentage']);
+        $interpretation = malta_assess_get_interpretation($scoreData['percentage'], $sanitized['language']);
 
         // =============================================================================
         // STEP 6: WEBHOOK SENDEN (Optional)
@@ -429,9 +429,30 @@ function malta_assess_calculate_score(array $answers): array {
 }
 
 /**
+ * Load translations from JSON file
+ *
+ * @param string $language Language code (de, en, nl)
+ * @return array|null Translations array or null if file not found
+ */
+function malta_assess_load_translations(string $language): ?array {
+    $upload_dir = wp_upload_dir();
+    $translations_path = $upload_dir['basedir'] . '/malta-assessment-v2/translations/' . $language . '.json';
+
+    if (!file_exists($translations_path)) {
+        return null;
+    }
+
+    $json = file_get_contents($translations_path);
+    $translations = json_decode($json, true);
+
+    return $translations ?: null;
+}
+
+/**
  * Interpretiere Score und gebe Kategorie zurück
  *
  * @param int $percentage Score 0-100%
+ * @param string $language Language code (de, en, nl)
  * @return array [ 'category' => 'good', 'categoryLabel' => 'Malta ist gut geeignet', 'interpretation' => '...' ]
  *
  * Kategorien (neu angepasst für mehr Realismus):
@@ -441,38 +462,68 @@ function malta_assess_calculate_score(array $answers): array {
  * - < 75%: "Malta ist gut geeignet" (good)
  * - ≥ 75%: "Malta ist sehr gut geeignet" (excellent)
  */
-function malta_assess_get_interpretation(int $percentage): array {
+function malta_assess_get_interpretation(int $percentage, string $language = 'de'): array {
+    // Load translations for the given language
+    $translations = malta_assess_load_translations($language);
+
+    // Fallback to German if translations not found
+    if (!$translations || !isset($translations['results']['categories'])) {
+        $translations = malta_assess_load_translations('de');
+    }
+
+    // Determine category based on percentage
     if ($percentage < 20) {
-        return [
-            'category' => 'explore',
-            'categoryLabel' => 'Lassen Sie uns sprechen',
-            'interpretation' => 'Ihre Situation erfordert eine individuelle Beratung. Kontaktieren Sie uns für ein persönliches Gespräch über Ihre Möglichkeiten. Malta bietet flexible Lösungen für verschiedenste Situationen.',
-        ];
+        $category = 'explore';
     } elseif ($percentage < 40) {
-        return [
-            'category' => 'fair',
-            'categoryLabel' => 'Malta könnte geeignet sein',
-            'interpretation' => 'Malta könnte für Sie funktionieren. Eine detaillierte Einzelfallprüfung ist notwendig. Mit gezielten Anpassungen können Sie von Maltas Vorteilen profitieren.',
-        ];
+        $category = 'fair';
     } elseif ($percentage < 60) {
-        return [
-            'category' => 'moderate',
-            'categoryLabel' => 'Malta ist bedingt geeignet',
-            'interpretation' => 'Malta bietet interessante Möglichkeiten für Sie. Einzelfallprüfung empfohlen. Die Kombination aus niedrigen Steuern, EU-Mitgliedschaft und hoher Lebensqualität macht Malta attraktiv.',
-        ];
+        $category = 'moderate';
     } elseif ($percentage < 75) {
-        return [
-            'category' => 'good',
-            'categoryLabel' => 'Malta ist gut geeignet',
-            'interpretation' => 'Malta bietet signifikante Vorteile für Ihre Situation. Mit der richtigen Planung ist dies ein erfolgversprechender Schritt. Wir helfen Ihnen, die optimale Struktur für Ihre spezifische Situation zu finden.',
-        ];
+        $category = 'good';
     } else {
+        $category = 'excellent';
+    }
+
+    // Get translated texts from JSON
+    $categoryData = $translations['results']['categories'][$category] ?? null;
+
+    if ($categoryData) {
         return [
-            'category' => 'excellent',
-            'categoryLabel' => 'Malta ist sehr gut geeignet',
-            'interpretation' => 'Ihre Situation ist sehr gut für Malta geeignet. Sie können von vielen Vorteilen profitieren - lassen Sie uns die Details besprechen! Hohe Erfolgswahrscheinlichkeit bei korrekter Umsetzung.',
+            'category' => $category,
+            'categoryLabel' => $categoryData['title'] ?? '',
+            'interpretation' => $categoryData['subtitle'] ?? '',
         ];
     }
+
+    // Ultimate fallback (German hardcoded) - should never happen
+    $fallbacks = [
+        'explore' => [
+            'categoryLabel' => 'Lassen Sie uns sprechen',
+            'interpretation' => 'Ihre Situation erfordert eine individuelle Beratung. Kontaktieren Sie uns für ein persönliches Gespräch über Ihre Möglichkeiten.',
+        ],
+        'fair' => [
+            'categoryLabel' => 'Malta könnte geeignet sein',
+            'interpretation' => 'Malta könnte für Sie funktionieren. Eine detaillierte Einzelfallprüfung ist notwendig.',
+        ],
+        'moderate' => [
+            'categoryLabel' => 'Malta ist bedingt geeignet',
+            'interpretation' => 'Malta bietet interessante Möglichkeiten für Sie. Einzelfallprüfung empfohlen.',
+        ],
+        'good' => [
+            'categoryLabel' => 'Malta ist gut geeignet',
+            'interpretation' => 'Malta bietet signifikante Vorteile für Ihre Situation. Mit der richtigen Planung ist dies ein erfolgversprechender Schritt.',
+        ],
+        'excellent' => [
+            'categoryLabel' => 'Malta ist sehr gut geeignet',
+            'interpretation' => 'Ihre Situation ist sehr gut für Malta geeignet. Sie können von vielen Vorteilen profitieren.',
+        ],
+    ];
+
+    return [
+        'category' => $category,
+        'categoryLabel' => $fallbacks[$category]['categoryLabel'] ?? '',
+        'interpretation' => $fallbacks[$category]['interpretation'] ?? '',
+    ];
 }
 
 /**
