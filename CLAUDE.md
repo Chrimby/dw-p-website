@@ -4,18 +4,26 @@
 
 ```
 dw-p-website/
-├── quickcheck-malta/           # Malta Assessment QuickCheck
-│   ├── public/                 # HTML-Dateien (DE, EN, NL)
-│   │   └── malta-assessment-v2/
-│   ├── functions-php-integration.php
-│   ├── INSTALLATION-OHNE-PLUGIN.md
-│   ├── WEBHOOK-PAYLOAD-EXAMPLE.json
-│   └── README.md
-├── .claude/                    # Claude Code Konfiguration
-│   ├── agents/                 # Custom AI Agents
-│   └── commands/               # Slash Commands
-├── CLAUDE.md                   # Diese Datei
-└── README.md                   # Repository Overview
+├── docs/                           # Dokumentation & Konzepte
+│   └── tracking/                   # Tracking-Konzepte
+│       ├── tracking-konzept-de.md  # Haupt-Tracking-Konzept
+│       ├── tracking-konzept-en.md
+│       ├── developer-briefing-bigquery.md
+│       ├── server-side-implementation-plan.md
+│       └── server-side-migration.md
+├── tools/                          # Interaktive Tools
+│   └── quickcheck-malta/           # Malta Assessment QuickCheck
+│       ├── public/malta-assessment-v2/
+│       ├── functions-php-integration.php
+│       └── README.md
+├── plugins/                        # WordPress Custom Plugins
+├── tracking/                       # GTM Templates, Stape Config
+├── themes/                         # Theme Customizations
+├── .claude/                        # Claude Code Konfiguration
+│   ├── agents/
+│   └── commands/
+├── CLAUDE.md                       # Diese Datei
+└── README.md                       # Repository Overview
 ```
 
 ## Environment Variables

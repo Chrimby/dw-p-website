@@ -1,80 +1,85 @@
 # Dr. Werner & Partner - Website Repository
 
-Monorepo für Website-bezogene Entwicklungen von Dr. Werner & Partner und Philipp Sauerborn.
+Zentrales Monorepo für Website-Entwicklung, Tracking und Tools von Dr. Werner & Partner und Philipp Sauerborn.
 
 ## Projektstruktur
 
 ```
 dw-p-website/
-├── quickcheck-malta/           # Malta Assessment QuickCheck
-│   ├── public/                 # HTML-Dateien (DE, EN, NL)
-│   ├── functions-php-integration.php
-│   ├── INSTALLATION-OHNE-PLUGIN.md
-│   └── README.md               # QuickCheck-spezifische Dokumentation
-├── .claude/                    # Claude Code Konfiguration
-│   ├── agents/                 # Custom AI Agents
-│   └── commands/               # Slash Commands
-├── CLAUDE.md                   # Development Guidelines
-└── README.md                   # Diese Datei
+├── docs/                           # Dokumentation & Konzepte
+│   └── tracking/                   # Tracking-Konzepte & Briefings
+│       ├── tracking-konzept-de.md  # Haupt-Tracking-Konzept (DE)
+│       ├── tracking-konzept-en.md  # Main Tracking Concept (EN)
+│       ├── developer-briefing-bigquery.md
+│       ├── server-side-implementation-plan.md
+│       └── server-side-migration.md
+├── tools/                          # Interaktive Tools
+│   └── quickcheck-malta/           # Malta Assessment QuickCheck
+├── plugins/                        # WordPress Custom Plugins
+├── tracking/                       # GTM Templates, Stape Config
+├── themes/                         # Theme Customizations
+├── .claude/                        # Claude Code Konfiguration
+└── CLAUDE.md                       # Development Guidelines
 ```
 
-## Projekte
+## Hauptbereiche
 
-### QuickCheck Malta (`/quickcheck-malta`)
-Interaktiver Eignungscheck für Malta-Interessenten mit WordPress-Integration und n8n Webhook.
+### `/docs/tracking` - Tracking-Dokumentation
+Vollständige Dokumentation des Tracking-Setups:
+- **Tracking-Konzept**: Server-Side GTM, GA4, Ad Platform CAPI
+- **BigQuery Analytics**: Custom Analytics Pipeline, User Stitching, Lead Scoring
+- **CRM Integration**: Brevo, Salesforce, Offline Conversions
 
-**Features:**
-- 12 Fragen für präzise Eignung
-- 3 Sprachen: Deutsch, English, Nederlands
-- WordPress AJAX Integration
-- n8n Webhook für Lead-Erfassung
-- Responsive Design (Mobile-First)
+[→ Tracking Dokumentation](./docs/tracking/README.md)
 
-[→ QuickCheck Dokumentation](./quickcheck-malta/README.md)
+### `/tools` - Interaktive Tools
+Website-Tools wie QuickChecks, Calculators, Assessments:
+- **QuickCheck Malta**: Eignungscheck für Malta-Interessenten (DE/EN/NL)
 
----
+[→ QuickCheck Malta](./tools/quickcheck-malta/README.md)
 
-## Geplante Projekte
+### `/plugins` - WordPress Plugins
+Custom WordPress Plugins für spezifische Funktionalitäten.
 
-### Tracking & Analytics
-- GTM Server Container Setup
-- GA4 Event Tracking
-- Ad Platform CAPI Integration (Meta, LinkedIn, Google Ads)
+### `/tracking` - Tracking Implementation
+GTM Container Exports, Stape Konfigurationen, Tag Templates.
 
-### Lead Magnets
-- Vavolta Integration
-- PDF Download Tracking
-- Form Submissions
-
-### Cross-Domain
-- User ID Stitching
-- BigQuery Analytics Pipeline
+### `/themes` - Theme Customizations
+Child Themes, Custom CSS, Elementor Widgets.
 
 ---
 
-## Development
+## Websites
 
-### Prerequisites
-- Node.js 18+
-- PHP 8.1+ (für WordPress-Integration)
-- Git
+| Website | Domain | GA4 Property |
+|---------|--------|--------------|
+| Dr. Werner & Partner | drwerner.com | G-DRWERNER |
+| Philipp Sauerborn | philippsauerborn.com | G-PHILIPP |
 
-### Quick Start
+## Tech Stack
+
+| Komponente | Technologie |
+|------------|-------------|
+| CMS | WordPress + Elementor |
+| Hosting | (tbd) |
+| GTM Server | Stape.io |
+| Analytics | GA4 + BigQuery |
+| Marketing Automation | Brevo |
+| CRM | Salesforce |
+| Ad Platforms | Google Ads, Meta, LinkedIn |
+
+---
+
+## Quick Start
+
 ```bash
 # Repository klonen
 git clone https://github.com/Chrimby/dw-p-website.git
 cd dw-p-website
 
-# Projekt auswählen und Dokumentation lesen
-cd quickcheck-malta
-cat README.md
+# Dokumentation lesen
+cat docs/tracking/README.md
 ```
-
-### Commands
-- `/code-review` - Code Quality Review
-- `/design-review` - UI/UX Review
-
----
 
 ## Contributing
 
@@ -89,15 +94,6 @@ cat README.md
 - `docs:` Dokumentation
 - `refactor:` Code Refactoring
 - `chore:` Maintenance
-
----
-
-## Websites
-
-| Website | Domain | Status |
-|---------|--------|--------|
-| Dr. Werner & Partner | drwerner.com | Production |
-| Philipp Sauerborn | philippsauerborn.com | Production |
 
 ---
 
