@@ -1,5 +1,23 @@
 # Development Guidelines
 
+## Repository Structure
+
+```
+dw-p-website/
+├── quickcheck-malta/           # Malta Assessment QuickCheck
+│   ├── public/                 # HTML-Dateien (DE, EN, NL)
+│   │   └── malta-assessment-v2/
+│   ├── functions-php-integration.php
+│   ├── INSTALLATION-OHNE-PLUGIN.md
+│   ├── WEBHOOK-PAYLOAD-EXAMPLE.json
+│   └── README.md
+├── .claude/                    # Claude Code Konfiguration
+│   ├── agents/                 # Custom AI Agents
+│   └── commands/               # Slash Commands
+├── CLAUDE.md                   # Diese Datei
+└── README.md                   # Repository Overview
+```
+
 ## Environment Variables
 
 ```yaml
@@ -12,6 +30,10 @@ WP_PASSWORD: a
 WP_ROOT: /Users/christoph/Studio/meine-wordpress-website/
 WP_DEBUG_LOG: /Users/christoph/Studio/meine-wordpress-website/wp-content/debug.log
 PLUGIN_PATH: /Users/christoph/Studio/meine-wordpress-website/wp-content/plugins/qualification-questionnaire/
+
+# Websites
+DRWERNER_URL: https://www.drwerner.com
+PHILIPP_URL: https://www.philippsauerborn.com
 ```
 
 ---
